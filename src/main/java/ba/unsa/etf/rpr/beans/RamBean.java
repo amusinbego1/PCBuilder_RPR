@@ -5,7 +5,7 @@ import java.util.Objects;
 public final class RamBean  implements Idable{
     private int id;
     private String name, manufacturer, desc, buyUrl, imgUrl;
-    double price;
+    private double price;
 
     public RamBean() {
         id = 0;

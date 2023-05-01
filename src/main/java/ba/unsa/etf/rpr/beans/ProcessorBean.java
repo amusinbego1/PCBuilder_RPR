@@ -5,7 +5,7 @@ import java.util.Objects;
 public final class ProcessorBean implements Idable{
     private int id;
     private String name, manufacturer, desc, buyUrl, imgUrl;
-    double price;
+    private double price;
 
     public ProcessorBean(int id, String name, String manufacturer, String desc, String buyUrl, String imgUrl, double price) {
         this.id = id;
