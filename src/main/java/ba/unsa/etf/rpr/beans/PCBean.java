@@ -4,6 +4,23 @@ public final class PCBean implements Idable{
     private int id, processorId, ramId, graphicCardId;
     private double price;
 
+
+    public PCBean() {
+        id = 0;
+        processorId = 0;
+        ramId = 0;
+        graphicCardId = 0;
+        price = 0;
+    }
+
+    public PCBean(int id, int processorId, int ramId, int graphicCardId, double price) {
+        this.id = id;
+        this.processorId = processorId;
+        this.ramId = ramId;
+        this.graphicCardId = graphicCardId;
+        this.price = price;
+    }
+
     @Override
     public void setId(int id) {
         this.id = id;
@@ -45,5 +62,5 @@ public final class PCBean implements Idable{
     public void setPrice(double price) {
         this.price = price;
     }
-    
+
 }
