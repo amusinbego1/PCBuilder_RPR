@@ -4,16 +4,16 @@ import java.util.Objects;
 
 public final class ProcessorBean implements Idable{
     private int id;
-    private String name, manufacturer, desc, buy_url, img_url;
+    private String name, manufacturer, desc, buyUrl, imgUrl;
     double price;
 
-    public ProcessorBean(int id, String name, String manufacturer, String desc, String buy_url, String img_url, double price) {
+    public ProcessorBean(int id, String name, String manufacturer, String desc, String buyUrl, String imgUrl, double price) {
         this.id = id;
         this.name = name;
         this.manufacturer = manufacturer;
         this.desc = desc;
-        this.buy_url = buy_url;
-        this.img_url = img_url;
+        this.buyUrl = buyUrl;
+        this.imgUrl = imgUrl;
         this.price = price;
     }
 
@@ -23,8 +23,8 @@ public final class ProcessorBean implements Idable{
         name = "";
         manufacturer = "";
         desc = "";
-        buy_url = "";
-        img_url = "";
+        buyUrl = "";
+        imgUrl = "";
     }
 
     @Override
@@ -61,20 +61,20 @@ public final class ProcessorBean implements Idable{
         this.desc = desc;
     }
 
-    public String getBuy_url() {
-        return buy_url;
+    public String getBuyUrl() {
+        return buyUrl;
     }
 
-    public void setBuy_url(String buy_url) {
-        this.buy_url = buy_url;
+    public void setBuyUrl(String buyUrl) {
+        this.buyUrl = buyUrl;
     }
 
-    public String getImg_url() {
-        return img_url;
+    public String getImgUrl() {
+        return imgUrl;
     }
 
-    public void setImg_url(String img_url) {
-        this.img_url = img_url;
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
     }
 
     public double getPrice() {
