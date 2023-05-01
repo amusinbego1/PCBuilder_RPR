@@ -1,5 +1,7 @@
 package ba.unsa.etf.rpr.beans;
 
+import java.util.Objects;
+
 public final class RamBean  implements Idable{
     private int id;
     private String name, manufacturer, desc, buyUrl, imgUrl;
@@ -81,5 +83,23 @@ public final class RamBean  implements Idable{
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        RamBean ramBean = (RamBean) o;
+        return id == ramBean.id && name.equals(ramBean.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name);
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }
