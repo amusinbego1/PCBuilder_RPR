@@ -5,6 +5,25 @@ public final class RamBean  implements Idable{
     private String name, manufacturer, desc, buyUrl, imgUrl;
     double price;
 
+    public RamBean() {
+        id = 0;
+        name = "";
+        manufacturer = "";
+        desc = "";
+        buyUrl = "";
+        imgUrl = "";
+        price = 0;
+    }
+
+    public RamBean(int id, String name, String manufacturer, String desc, String buyUrl, String imgUrl, double price) {
+        this.id = id;
+        this.name = name;
+        this.manufacturer = manufacturer;
+        this.desc = desc;
+        this.buyUrl = buyUrl;
+        this.imgUrl = imgUrl;
+        this.price = price;
+    }
 
     @Override
     public void setId(int id) {
