@@ -1,5 +1,7 @@
 package ba.unsa.etf.rpr.beans;
 
+import java.util.Objects;
+
 public final class GraphicCardBean implements Idable{
     private int id;
     private String name, manufacturer, desc, buyUrl, imgUrl;
@@ -83,5 +85,21 @@ public final class GraphicCardBean implements Idable{
         this.price = price;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        GraphicCardBean that = (GraphicCardBean) o;
+        return id == that.id && name.equals(that.name);
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name);
+    }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }
