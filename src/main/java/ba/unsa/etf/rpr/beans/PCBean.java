@@ -1,5 +1,11 @@
 package ba.unsa.etf.rpr.beans;
 
+import java.util.Objects;
+
+/* TODO
+    consider using other beans to fields instead of ids
+    make better implementation of toString()
+ */
 public final class PCBean implements Idable{
     private int id, processorId, ramId, graphicCardId;
     private double price;
@@ -63,4 +69,28 @@ public final class PCBean implements Idable{
         this.price = price;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PCBean pcBean = (PCBean) o;
+        return id == pcBean.id && processorId == pcBean.processorId && ramId == pcBean.ramId && graphicCardId == pcBean.graphicCardId;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, processorId, ramId, graphicCardId);
+    }
+
+
+    @Override
+    public String toString() {
+        return "PCBean{" +
+                "id=" + id +
+                ", processorId=" + processorId +
+                ", ramId=" + ramId +
+                ", graphicCardId=" + graphicCardId +
+                ", price=" + price +
+                '}';
+    }
 }
