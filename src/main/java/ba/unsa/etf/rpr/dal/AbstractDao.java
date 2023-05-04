@@ -2,6 +2,7 @@ package ba.unsa.etf.rpr.dal;
 
 import ba.unsa.etf.rpr.beans.Idable;
 import ba.unsa.etf.rpr.exceptions.PCBuilderException;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
 import java.sql.*;
@@ -56,7 +57,7 @@ public abstract class AbstractDao<T extends Idable> implements Dao<T> {
     public T add(T item) throws PCBuilderException {
         try{
             String columnNames = getColumnNames();
-            executeQuery("INSERT INTO " + this.tableName + " (" + columnNames + ") VALUES (" + "?,".repeat((int)(columnNames.chars().filter(ch -> ch==',').count())) + ");", getItemArray(item));
+            executeQuery("INSERT INTO " + this.tableName + " (" + columnNames + ") VALUES (" + "?,".repeat(StringUtils.countMatches(columnNames, ","))  + " ?);", getItemArray(item));
         }
         catch(PCBuilderException e){
             throw new PCBuilderException("Cannot add item");
