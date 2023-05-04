@@ -52,6 +52,9 @@ public abstract class AbstractDao<T extends Idable> implements Dao<T> {
         return resultList;
     }
 
+    /*Todo
+       Make add method with preparedStatements
+     */
     @Override
     public T add(T item) throws PCBuilderException {
         try{
