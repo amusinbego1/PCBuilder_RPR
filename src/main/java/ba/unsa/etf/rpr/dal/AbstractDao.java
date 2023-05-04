@@ -75,6 +75,15 @@ public abstract class AbstractDao<T extends Idable> implements Dao<T> {
     }
 
     @Override
+    public List<T> getAll() throws PCBuilderException {
+        try{
+            return executeQuery("SELECT * FROM " + this.tableName, null);
+        }
+        catch(Exception e){
+            throw new PCBuilderException("Cannot get all items");
+        }    }
+
+    @Override
     public T add(T item) throws PCBuilderException {
         try{
             String columnNames = getColumnNames();
