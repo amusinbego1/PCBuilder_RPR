@@ -56,7 +56,7 @@ public abstract class AbstractDao<T extends Idable> implements Dao<T> {
         List<String> columnNamesList = new ArrayList<>();
         try {
             Statement statement = this.connection.createStatement();
-            ResultSetMetaData rsMetaData = statement.executeQuery("SELECT * FROM " + tableName).getMetaData();
+            ResultSetMetaData rsMetaData = statement.executeQuery("SELECT * FROM " + tableName + " WHERE 1=0;").getMetaData();
             for(int i=2; i<=rsMetaData.getColumnCount(); i++)
                 columnNamesList.add(rsMetaData.getColumnName(i));
         } catch (SQLException e) {
