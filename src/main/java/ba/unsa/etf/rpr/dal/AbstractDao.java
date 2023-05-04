@@ -65,6 +65,16 @@ public abstract class AbstractDao<T extends Idable> implements Dao<T> {
     }
 
     @Override
+    public void deleteById(int id) throws PCBuilderException {
+        try{
+            executeQuery("DELETE FROM " + this.tableName + " WHERE " + this.tableName.substring(0, tableName.length()-1) + "_id = ?;", new Object[]{id});
+        }
+        catch(Exception e){
+            throw new PCBuilderException("Cannot delete item by id");
+        }
+    }
+
+    @Override
     public T add(T item) throws PCBuilderException {
         try{
             String columnNames = getColumnNames();
