@@ -4,10 +4,8 @@ import ba.unsa.etf.rpr.beans.Idable;
 import ba.unsa.etf.rpr.exceptions.PCBuilderException;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -32,7 +30,29 @@ public abstract class AbstractDao<T extends Idable> implements Dao<T> {
     }
 
     public abstract T rowToObject(ResultSet resultSet) throws PCBuilderException;
+
     public abstract Map<String, Object> objectToRow(T object);
 
+    public List<T> executeQuery(String query, Object[] parameters) throws PCBuilderException {
+        List<T> resultList = new ArrayList<>();
+        try {
+            PreparedStatement preparedStatement = this.connection.prepareStatement(query);
+            if (parameters != null)
+                for (int i = 0; i < parameters.length; i++)
+                    preparedStatement.setObject(i + 1, parameters[i]);
+
+            if (preparedStatement.execute()) {
+                ResultSet resultSet = preparedStatement.getResultSet();
+                while (resultSet != null && resultSet.next())
+                    resultList.add(rowToObject(resultSet));
+            }
+        } catch (SQLException e) {
+            throw new PCBuilderException("Incorrect query");
+        }
+        return resultList;
+    }
+
     
+
+
 }
