@@ -66,6 +66,16 @@ public abstract class AbstractDao<T extends Idable> implements Dao<T> {
         return item;
     }
 
+    private Object[] getItemArray(T item){
+        List<Object> rowList = new ArrayList<>();
+        Map<String, Object> row = objectToRow(item);
+        for(String key: row.keySet())
+            rowList.add(row.get(key));
+        if(!rowList.isEmpty())
+            rowList.remove(0);
+        return rowList.toArray();
+    }
+
     private String getItemValuesAsString(T item) {
         Map<String, Object> row = objectToRow(item);
         List<String> itemValuesList = new ArrayList<>();
