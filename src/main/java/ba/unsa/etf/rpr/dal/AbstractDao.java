@@ -52,7 +52,18 @@ public abstract class AbstractDao<T extends Idable> implements Dao<T> {
         return resultList;
     }
 
-    private String getItemValuesAsString(T item) throws PCBuilderException{
+    @Override
+    public T add(T item) throws PCBuilderException {
+        try{
+            executeQuery("INSERT INTO " + this.tableName + " (" + getColumnNames() + ") VALUES (" + getItemValuesAsString(item) + ");", null);
+        }
+        catch(PCBuilderException e){
+            throw new PCBuilderException("Cannot add item");
+        }
+        return item;
+    }
+
+    private String getItemValuesAsString(T item) {
         Map<String, Object> row = objectToRow(item);
         List<String> itemValuesList = new ArrayList<>();
         for(var key: row.keySet())
