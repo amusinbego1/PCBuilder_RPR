@@ -52,6 +52,14 @@ public abstract class AbstractDao<T extends Idable> implements Dao<T> {
         return resultList;
     }
 
+    private String getItemValuesAsString(T item) throws PCBuilderException{
+        Map<String, Object> row = objectToRow(item);
+        List<String> itemValuesList = new ArrayList<>();
+        for(var key: row.keySet())
+            itemValuesList.add(row.get(key).toString());
+        return itemValuesList.toString().trim().substring(1, itemValuesList.toString().trim().length()-1);
+    }
+
     private String getColumnNames() throws PCBuilderException {
         List<String> columnNamesList = new ArrayList<>();
         try {
