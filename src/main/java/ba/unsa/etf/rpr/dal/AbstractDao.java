@@ -52,13 +52,11 @@ public abstract class AbstractDao<T extends Idable> implements Dao<T> {
         return resultList;
     }
 
-    /*Todo
-       Make add method with preparedStatements
-     */
     @Override
     public T add(T item) throws PCBuilderException {
         try{
-            executeQuery("INSERT INTO " + this.tableName + " (" + getColumnNames() + ") VALUES (" + getItemValuesAsString(item) + ");", null);
+            String columnNames = getColumnNames();
+            executeQuery("INSERT INTO " + this.tableName + " (" + columnNames + ") VALUES (" + "?,".repeat((int)(columnNames.chars().filter(ch -> ch==',').count())) + ");", getItemArray(item));
         }
         catch(PCBuilderException e){
             throw new PCBuilderException("Cannot add item");
@@ -76,13 +74,6 @@ public abstract class AbstractDao<T extends Idable> implements Dao<T> {
         return rowList.toArray();
     }
 
-    private String getItemValuesAsString(T item) {
-        Map<String, Object> row = objectToRow(item);
-        List<String> itemValuesList = new ArrayList<>();
-        for(var key: row.keySet())
-            itemValuesList.add(row.get(key).toString());
-        return itemValuesList.toString().trim().substring(1, itemValuesList.toString().trim().length()-1);
-    }
 
     private String getColumnNames() throws PCBuilderException {
         List<String> columnNamesList = new ArrayList<>();
