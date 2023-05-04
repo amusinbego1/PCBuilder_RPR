@@ -2,6 +2,7 @@ package ba.unsa.etf.rpr.dal;
 
 import ba.unsa.etf.rpr.beans.Idable;
 import ba.unsa.etf.rpr.exceptions.PCBuilderException;
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
@@ -81,7 +82,21 @@ public abstract class AbstractDao<T extends Idable> implements Dao<T> {
         }
         catch(Exception e){
             throw new PCBuilderException("Cannot get all items");
-        }    }
+        }
+    }
+
+    @Override
+    public T update(T item) throws PCBuilderException {
+        try{
+            String enhancedColumnNames = getColumnNames().replaceAll(",", " = ?,") + " = ? ";
+            executeQuery("UPDATE " + this.tableName +  " SET " + enhancedColumnNames + " WHERE " + this.tableName.substring(0, tableName.length()-1) + "_id = ?;",
+                    ArrayUtils.addAll(getItemArray(item), item.getId()));
+        }
+        catch(PCBuilderException e){
+            throw new PCBuilderException("Cannot update item");
+        }
+        return item;
+    }
 
     @Override
     public T add(T item) throws PCBuilderException {
