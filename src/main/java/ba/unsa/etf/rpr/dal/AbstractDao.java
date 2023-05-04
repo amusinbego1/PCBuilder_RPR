@@ -52,7 +52,18 @@ public abstract class AbstractDao<T extends Idable> implements Dao<T> {
         return resultList;
     }
 
-    
+    private String getColumnNames() throws PCBuilderException {
+        List<String> columnNamesList = new ArrayList<>();
+        try {
+            Statement statement = this.connection.createStatement();
+            ResultSetMetaData rsMetaData = statement.executeQuery("SELECT * FROM " + tableName).getMetaData();
+            for(int i=2; i<=rsMetaData.getColumnCount(); i++)
+                columnNamesList.add(rsMetaData.getColumnName(i));
+        } catch (SQLException e) {
+            throw new PCBuilderException("Cannot get column names");
+        }
+        return columnNamesList.toString().trim().substring(1, columnNamesList.toString().trim().length()-1);
+    }
 
 
 }
