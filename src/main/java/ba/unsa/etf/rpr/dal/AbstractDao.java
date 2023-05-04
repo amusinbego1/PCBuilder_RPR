@@ -54,6 +54,17 @@ public abstract class AbstractDao<T extends Idable> implements Dao<T> {
     }
 
     @Override
+    public T getById(int id) throws PCBuilderException {
+        try{
+            T item =  executeQuery("SELECT * FROM " + this.tableName + " WHERE " + this.tableName.substring(0, tableName.length()-1) + "_id = ?;", new Object[]{id}).get(0);
+            return item;
+        }
+        catch(Exception e){
+            throw new PCBuilderException("Cannot get item by id");
+        }
+    }
+
+    @Override
     public T add(T item) throws PCBuilderException {
         try{
             String columnNames = getColumnNames();
