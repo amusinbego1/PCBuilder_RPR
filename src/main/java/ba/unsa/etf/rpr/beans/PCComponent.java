@@ -17,6 +17,7 @@ public abstract class PCComponent implements Idable {
     }
 
     public PCComponent() {
+        id = 0;
         name = "";
         manufacturer = "";
         desc = "";
@@ -25,7 +26,8 @@ public abstract class PCComponent implements Idable {
         price = 0;
     }
 
-    public PCComponent(String name, String manufacturer, String desc, String buyUrl, String imgUrl, double price) {
+    public PCComponent(int id, String name, String manufacturer, String desc, String buyUrl, String imgUrl, double price) {
+        this.id = id;
         this.name = name;
         this.manufacturer = manufacturer;
         this.desc = desc;

@@ -2,29 +2,16 @@ package ba.unsa.etf.rpr.beans;
 
 import java.util.Objects;
 
-public final class GraphicCardBean extends PCComponent implements Idable{
-
-    private int id;
+public final class GraphicCardBean extends PCComponent{
 
     public GraphicCardBean() {
         super();
-        id = 0;
     }
 
     public GraphicCardBean(int id, String name, String manufacturer, String desc, String buyUrl, String imgUrl, double price) {
-        super(name, manufacturer, desc, buyUrl, imgUrl, price);
-        this.id = id;
+        super(id, name, manufacturer, desc, buyUrl, imgUrl, price);
     }
 
-    @Override
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    @Override
-    public int getId() {
-        return id;
-    }
 
     @Override
     public boolean equals(Object o) {
