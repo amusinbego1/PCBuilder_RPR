@@ -13,7 +13,7 @@ public abstract class PCComponent {
         price = 0;
     }
 
-    public PCComponent(int id, String name, String manufacturer, String desc, String buyUrl, String imgUrl, double price) {
+    public PCComponent(String name, String manufacturer, String desc, String buyUrl, String imgUrl, double price) {
         this.name = name;
         this.manufacturer = manufacturer;
         this.desc = desc;
