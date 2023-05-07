@@ -1,8 +1,20 @@
 package ba.unsa.etf.rpr.beans;
 
-public abstract class PCComponent {
+public abstract class PCComponent implements Idable {
+
+    private int id;
     private String name, manufacturer, desc, buyUrl, imgUrl;
     private double price;
+
+    @Override
+    public int getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public PCComponent() {
         name = "";
