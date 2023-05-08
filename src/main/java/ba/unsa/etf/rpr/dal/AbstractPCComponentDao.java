@@ -49,7 +49,7 @@ public abstract class AbstractPCComponentDao extends AbstractDao<PCComponent> {
 
 
     @Override
-    public Map<String, Object> objectToRow(PCComponent object) {
+    public Map<String, Object> objectToRow(PCComponent object) throws PCBuilderException {
         Map<String, Object> row = new HashMap<>();
         row.put(getIdProperty(), object.getId());
         row.put(getDescProperty(), object.getDesc());
