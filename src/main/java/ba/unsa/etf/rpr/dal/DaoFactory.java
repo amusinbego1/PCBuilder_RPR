@@ -4,6 +4,8 @@ import ba.unsa.etf.rpr.beans.PCComponent;
 
 public class DaoFactory {
 
+    private DaoFactory(){}
+
     public static AbstractPCComponentDao getProcessorDao(){
         return ProcessorDaoImpl.getInstance();
     }
