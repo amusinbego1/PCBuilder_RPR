@@ -1,5 +1,7 @@
 package ba.unsa.etf.rpr.beans;
 
+import ba.unsa.etf.rpr.exceptions.PCBuilderException;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -7,7 +9,7 @@ import java.util.Objects;
 /* TODO
     make better implementation of toString()
  */
-public class PCBean implements Idable{
+public class PCBean implements Idable {
     private int id;
     private List<PCComponent> components;
 
@@ -42,11 +44,21 @@ public class PCBean implements Idable{
 
     public double getPrice() {
         double price = 0;
-        for(PCComponent component: components)
+        for (PCComponent component : components)
             price += component.getPrice();
         return price;
     }
 
+    public PCComponent getComponent(String componentType) throws PCBuilderException {
+        for (PCComponent component : components)
+            if (componentType.toLowerCase().contains("ram") && component instanceof RamBean)
+                return component;
+            else if (componentType.toLowerCase().contains("processor") && component instanceof ProcessorBean)
+                return component;
+            else if (componentType.toLowerCase().contains("graph") && component instanceof GraphCardBean)
+                return component;
+        throw new PCBuilderException("There is no such component");
+    }
 
     @Override
     public boolean equals(Object o) {
