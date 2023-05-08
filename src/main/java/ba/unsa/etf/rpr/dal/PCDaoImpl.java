@@ -6,6 +6,7 @@ import ba.unsa.etf.rpr.exceptions.PCBuilderException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -37,7 +38,7 @@ public class PCDaoImpl extends AbstractDao<PCBean> implements PCDao {
 
     @Override
     public Map<String, Object> objectToRow(PCBean object) throws PCBuilderException {
-        Map<String, Object> row = new HashMap<>();
+        Map<String, Object> row = new LinkedHashMap<>();
         row.put("pc_id", object.getId());
         row.put("ram_id", object.getComponent("ram").getId());
         row.put("processor_id", object.getComponent("processor").getId());

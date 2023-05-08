@@ -6,6 +6,7 @@ import ba.unsa.etf.rpr.exceptions.PCBuilderException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -50,13 +51,14 @@ public abstract class AbstractPCComponentDao extends AbstractDao<PCComponent> {
 
     @Override
     public Map<String, Object> objectToRow(PCComponent object) throws PCBuilderException {
-        Map<String, Object> row = new HashMap<>();
+        Map<String, Object> row = new LinkedHashMap<>();
         row.put(getIdProperty(), object.getId());
-        row.put(getDescProperty(), object.getDesc());
         row.put(getNameProperty(), object.getName());
-        row.put("price", object.getPrice());
-        row.put("img_url", object.getImgUrl());
+        row.put("manufacturer", object.getManufacturer());
         row.put("shop_url", object.getBuyUrl());
+        row.put("img_url", object.getImgUrl());
+        row.put("price", object.getPrice());
+        row.put(getDescProperty(), object.getDesc());
         return row;
     }
 
