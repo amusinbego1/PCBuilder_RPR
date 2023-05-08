@@ -36,7 +36,7 @@ public abstract class AbstractDao<T extends Idable> implements Dao<T> {
 
     public abstract T rowToObject(ResultSet resultSet) throws PCBuilderException;
 
-    public abstract Map<String, Object> objectToRow(T object);
+    public abstract Map<String, Object> objectToRow(T object) throws PCBuilderException;
 
     public List<T> executeQuery(String query, Object[] parameters) throws PCBuilderException {
         List<T> resultList = new ArrayList<>();
@@ -112,7 +112,7 @@ public abstract class AbstractDao<T extends Idable> implements Dao<T> {
         return item;
     }
 
-    private Object[] getItemArray(T item){
+    private Object[] getItemArray(T item) throws PCBuilderException{
         List<Object> rowList = new ArrayList<>();
         Map<String, Object> row = objectToRow(item);
         for(String key: row.keySet())
