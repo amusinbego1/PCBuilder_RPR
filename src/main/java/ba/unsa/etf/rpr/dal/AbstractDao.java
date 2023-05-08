@@ -5,6 +5,9 @@ import ba.unsa.etf.rpr.exceptions.PCBuilderException;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 
+import javax.swing.plaf.nimbus.State;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
@@ -16,7 +19,7 @@ public abstract class AbstractDao<T extends Idable> implements Dao<T> {
     private Connection connection;
     private String tableName;
 
-    public AbstractDao(String tableName) {
+    public AbstractDao(String tableName) throws PCBuilderException {
         try {
             this.tableName = tableName;
             Properties properties = new Properties();
@@ -24,10 +27,28 @@ public abstract class AbstractDao<T extends Idable> implements Dao<T> {
             String url = properties.getProperty("db.connection");
             String username = properties.getProperty("db.username");
             String password = properties.getProperty("db.password");
-            this.connection = DriverManager.getConnection(url, username, password);
-        } catch (IOException | SQLException e) {
-            System.out.println("Connection failed");
-            e.printStackTrace();
+            try{
+                this.connection = DriverManager.getConnection(url, username, password);
+            }
+            catch(SQLException e){
+                this.connection = DriverManager.getConnection("jdbc:mysql://localhost");
+                injectSQLDatabase();
+            }
+        } catch (IOException | PCBuilderException | SQLException e) {
+            throw new PCBuilderException(e.getMessage(), e);
+        }
+    }
+
+    private void injectSQLDatabase() throws PCBuilderException{
+        try(FileInputStream input = new FileInputStream(new File(ClassLoader.getSystemResource("dbdump.sql").toURI()))){
+            String DbSql = new String(input.readAllBytes());
+            for(String sqlCommand: DbSql.split(";")){
+                Statement statement = this.connection.createStatement();
+                statement.execute(sqlCommand + ";");
+            }
+        }
+        catch(Exception e){
+            throw new PCBuilderException("Database dump failed");
         }
     }
     protected String getTableName() {
