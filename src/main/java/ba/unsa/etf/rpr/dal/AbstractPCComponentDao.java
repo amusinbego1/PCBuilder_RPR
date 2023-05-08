@@ -75,30 +75,11 @@ public abstract class AbstractPCComponentDao extends AbstractDao<PCComponent> {
         return components.get(0);
     }
 
-    public String getImgUrlById(int id) throws PCBuilderException {
-        List<? extends PCComponent> components = executeQuery("SELECT * FROM " + this.getTableName() + " WHERE " + getIdProperty() + " =? ;", new Object[]{id});
-        if(components.isEmpty())
-            throw new PCBuilderException("Cannot find component img url with given id");
-        return components.get(0).getImgUrl();
-    }
-
-    public String shopUrlById(int id) throws PCBuilderException {
-        List<? extends PCComponent> components = executeQuery("SELECT * FROM " + this.getTableName() + " WHERE " + getIdProperty() + " = ?;", new Object[]{id});
-        if(components.isEmpty())
-            throw new PCBuilderException("Cannot find component shop url with given id");
-        return components.get(0).getBuyUrl();
-    }
 
     public List<? extends PCComponent> getAllComponents() throws PCBuilderException{
         return executeQuery("SELECT * FORM " + this.getTableName() + ";", null);
     }
 
-    public String getComponentDescById(int id) throws PCBuilderException{
-        List<? extends PCComponent> components = executeQuery("SELECT * FROM " + this.getTableName() + " WHERE " + getIdProperty() + " = ?;", new Object[]{id});
-        if(components.isEmpty())
-            throw new PCBuilderException("Cannot find component description with given id");
-        return components.get(0).getDesc();
-    }
 
     public List<? extends PCComponent> getComponentsWithPriceBetween(double lowPrice, double highPrice) throws PCBuilderException{
         return executeQuery("SELECT * FROM " + this.getTableName() + " WHERE price >= ? AND price <= ?;", new Object[]{lowPrice, highPrice});
