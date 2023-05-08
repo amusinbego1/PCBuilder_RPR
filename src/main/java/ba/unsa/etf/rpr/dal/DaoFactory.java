@@ -17,4 +17,8 @@ public class DaoFactory {
     public static AbstractPCComponentDao getRamDao(){
         return RamDaoImpl.getInstance();
     }
+
+    public static PCDao getPCDao(){
+        return PCDaoImpl.getInstance();
+    }
 }
