@@ -30,6 +30,9 @@ public abstract class AbstractDao<T extends Idable> implements Dao<T> {
             e.printStackTrace();
         }
     }
+    protected String getTableName() {
+        return tableName;
+    }
 
     public abstract T rowToObject(ResultSet resultSet) throws PCBuilderException;
 
