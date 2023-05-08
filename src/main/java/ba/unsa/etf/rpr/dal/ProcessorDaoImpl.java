@@ -13,7 +13,7 @@ public class ProcessorDaoImpl extends AbstractPCComponentDao{
     private ProcessorDaoImpl(String tableName) {
         super(tableName);
     }
-    public ProcessorDaoImpl getInstance(){
+    public static ProcessorDaoImpl getInstance(){
         if(instance == null) instance = new ProcessorDaoImpl("processors");
         return instance;
     }

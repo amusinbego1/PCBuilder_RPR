@@ -13,7 +13,7 @@ public class RamDaoImpl extends AbstractPCComponentDao{
     private RamDaoImpl(String tableName) {
         super(tableName);
     }
-    public RamDaoImpl getInstance(){
+    public static RamDaoImpl getInstance(){
         if(instance == null) instance = new RamDaoImpl("rams");
         return instance;
     }

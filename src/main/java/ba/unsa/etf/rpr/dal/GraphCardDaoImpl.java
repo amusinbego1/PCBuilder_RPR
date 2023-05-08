@@ -13,7 +13,7 @@ public class GraphCardDaoImpl extends AbstractPCComponentDao{
     private GraphCardDaoImpl(String tableName) {
         super(tableName);
     }
-    public GraphCardDaoImpl getInstance(){
+    public static GraphCardDaoImpl getInstance(){
         if(instance == null) instance = new GraphCardDaoImpl("graphcards");
         return instance;
     }
