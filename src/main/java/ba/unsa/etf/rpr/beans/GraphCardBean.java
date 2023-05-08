@@ -2,13 +2,13 @@ package ba.unsa.etf.rpr.beans;
 
 import java.util.Objects;
 
-public final class GraphicCardBean extends PCComponent{
+public final class GraphCardBean extends PCComponent{
 
-    public GraphicCardBean() {
+    public GraphCardBean() {
         super();
     }
 
-    public GraphicCardBean(int id, String name, String manufacturer, String desc, String buyUrl, String imgUrl, double price) {
+    public GraphCardBean(int id, String name, String manufacturer, String desc, String buyUrl, String imgUrl, double price) {
         super(id, name, manufacturer, desc, buyUrl, imgUrl, price);
     }
 
@@ -17,7 +17,7 @@ public final class GraphicCardBean extends PCComponent{
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        GraphicCardBean that = (GraphicCardBean) o;
+        GraphCardBean that = (GraphCardBean) o;
         return getId() == that.getId() && getName().equals(that.getName());
     }
 
