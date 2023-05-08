@@ -3,7 +3,11 @@ package ba.unsa.etf.rpr.dal;
 import ba.unsa.etf.rpr.beans.PCComponent;
 import ba.unsa.etf.rpr.exceptions.PCBuilderException;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public abstract class AbstractPCComponentDao extends AbstractDao<PCComponent> {
     public AbstractPCComponentDao(String tableName) {
@@ -26,6 +30,36 @@ public abstract class AbstractPCComponentDao extends AbstractDao<PCComponent> {
     private String getDescProperty(){
         return getProperty("_desc");
     }
+
+    protected PCComponent rowToGivenObject(PCComponent component, ResultSet resultSet) throws PCBuilderException{
+        try{
+            component.setId(resultSet.getInt(getIdProperty()));
+            component.setDesc(resultSet.getString(getDescProperty()));
+            component.setPrice(resultSet.getDouble("price"));
+            component.setName(resultSet.getString(getNameProperty()));
+            component.setManufacturer(resultSet.getString("manufacturer"));
+            component.setImgUrl(resultSet.getString("img_url"));
+            component.setBuyUrl(resultSet.getString("shop_url"));
+            return component;
+        }
+        catch(SQLException e){
+            throw new PCBuilderException(e.getMessage(), e);
+        }
+    }
+
+
+    @Override
+    public Map<String, Object> objectToRow(PCComponent object) {
+        Map<String, Object> row = new HashMap<>();
+        row.put(getIdProperty(), object.getId());
+        row.put(getDescProperty(), object.getDesc());
+        row.put(getNameProperty(), object.getName());
+        row.put("price", object.getPrice());
+        row.put("img_url", object.getImgUrl());
+        row.put("shop_url", object.getBuyUrl());
+        return row;
+    }
+
     public List<PCComponent> getComponentsByName(String name) throws PCBuilderException {
         return executeQuery("SELECT * FROM " + this.getTableName() + " WHERE " + getNameProperty() + " = ?;", new Object[] {name});
     }
