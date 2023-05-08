@@ -19,7 +19,7 @@ public abstract class AbstractDao<T extends Idable> implements Dao<T> {
     private Connection connection;
     private String tableName;
 
-    public AbstractDao(String tableName) throws PCBuilderException {
+    public AbstractDao(String tableName){
         try {
             this.tableName = tableName;
             Properties properties = new Properties();
@@ -35,7 +35,7 @@ public abstract class AbstractDao<T extends Idable> implements Dao<T> {
                 injectSQLDatabase();
             }
         } catch (IOException | PCBuilderException | SQLException e) {
-            throw new PCBuilderException(e.getMessage(), e);
+            e.printStackTrace();
         }
     }
 
