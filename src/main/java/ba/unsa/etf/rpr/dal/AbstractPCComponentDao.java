@@ -60,51 +60,54 @@ public abstract class AbstractPCComponentDao extends AbstractDao<PCComponent> {
         return row;
     }
 
-    public List<PCComponent> getComponentsByName(String name) throws PCBuilderException {
+    public List<? extends PCComponent> getComponentsByName(String name) throws PCBuilderException {
         return executeQuery("SELECT * FROM " + this.getTableName() + " WHERE " + getNameProperty() + " = ?;", new Object[] {name});
     }
 
-    public List<PCComponent> getByManufacturer(String manufacturer) throws PCBuilderException{
+    public List<? extends PCComponent> getByManufacturer(String manufacturer) throws PCBuilderException{
         return executeQuery("SELECT * FROM " + this.getTableName() + " WHERE manufacturer = ?;", new Object[]{manufacturer});
     }
 
     public PCComponent getComponentById(int id) throws PCBuilderException{
-        List<PCComponent> components = executeQuery("SELECT * FROM " + this.getTableName() + " WHERE " + getIdProperty() + " = ?;", new Object[]{id});
+        List<? extends PCComponent> components = executeQuery("SELECT * FROM " + this.getTableName() + " WHERE " + getIdProperty() + " = ?;", new Object[]{id});
         if(components.isEmpty())
             throw new PCBuilderException("Cannot find component with given id");
         return components.get(0);
     }
 
     public String getImgUrlById(int id) throws PCBuilderException {
-        List<PCComponent> components = executeQuery("SELECT * FROM " + this.getTableName() + " WHERE " + getIdProperty() + " =? ;", new Object[]{id});
+        List<? extends PCComponent> components = executeQuery("SELECT * FROM " + this.getTableName() + " WHERE " + getIdProperty() + " =? ;", new Object[]{id});
         if(components.isEmpty())
             throw new PCBuilderException("Cannot find component img url with given id");
         return components.get(0).getImgUrl();
     }
 
     public String shopUrlById(int id) throws PCBuilderException {
-        List<PCComponent> components = executeQuery("SELECT * FROM " + this.getTableName() + " WHERE " + getIdProperty() + " = ?;", new Object[]{id});
+        List<? extends PCComponent> components = executeQuery("SELECT * FROM " + this.getTableName() + " WHERE " + getIdProperty() + " = ?;", new Object[]{id});
         if(components.isEmpty())
             throw new PCBuilderException("Cannot find component shop url with given id");
         return components.get(0).getBuyUrl();
     }
 
-    public List<PCComponent> getAllComponents() throws PCBuilderException{
+    public List<? extends PCComponent> getAllComponents() throws PCBuilderException{
         return executeQuery("SELECT * FORM " + this.getTableName() + ";", null);
     }
 
     public String getComponentDescById(int id) throws PCBuilderException{
-        List<PCComponent> components = executeQuery("SELECT * FROM " + this.getTableName() + " WHERE " + getIdProperty() + " = ?;", new Object[]{id});
+        List<? extends PCComponent> components = executeQuery("SELECT * FROM " + this.getTableName() + " WHERE " + getIdProperty() + " = ?;", new Object[]{id});
         if(components.isEmpty())
             throw new PCBuilderException("Cannot find component description with given id");
         return components.get(0).getDesc();
     }
 
-    public List<PCComponent> getComponentsWithHigherPrice(double price) throws PCBuilderException{
+    public List<? extends PCComponent> getComponentsWithPriceBetween(double lowPrice, double highPrice) throws PCBuilderException{
+        return executeQuery("SELECT * FROM " + this.getTableName() + " WHERE price >= ? AND price <= ?;", new Object[]{lowPrice, highPrice});
+    }
+    public List<? extends PCComponent> getComponentsWithHigherPrice(double price) throws PCBuilderException{
         return executeQuery("SELECT * FROM " + this.getTableName() + " WHERE price >= ?;", new Object[]{price});
     }
 
-    public List<PCComponent> getComponentsWithLowerPrice(double price) throws PCBuilderException{
+    public List<? extends PCComponent> getComponentsWithLowerPrice(double price) throws PCBuilderException{
         return executeQuery("SELECT * FROM " + this.getTableName() + " WHERE price <= ?;", new Object[]{price});
     }
 
