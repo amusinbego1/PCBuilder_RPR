@@ -10,13 +10,11 @@ import java.util.Objects;
 public class PCBean implements Idable{
     private int id;
     private List<PCComponent> components;
-    private double price;
 
 
     public PCBean() {
         id = 0;
         components = new ArrayList<>();
-        price = 0;
     }
 
     public PCBean(int id, List<PCComponent> components) {
@@ -43,6 +41,9 @@ public class PCBean implements Idable{
     }
 
     public double getPrice() {
+        double price = 0;
+        for(PCComponent component: components)
+            price += component.getPrice();
         return price;
     }
 
