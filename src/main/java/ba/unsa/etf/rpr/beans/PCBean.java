@@ -1,30 +1,27 @@
 package ba.unsa.etf.rpr.beans;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /* TODO
-    consider using other beans to fields instead of ids
     make better implementation of toString()
  */
-public final class PCBean implements Idable{
-    private int id, processorId, ramId, graphicCardId;
+public class PCBean implements Idable{
+    private int id;
+    private List<PCComponent> components;
     private double price;
 
 
     public PCBean() {
         id = 0;
-        processorId = 0;
-        ramId = 0;
-        graphicCardId = 0;
+        components = new ArrayList<>();
         price = 0;
     }
 
-    public PCBean(int id, int processorId, int ramId, int graphicCardId, double price) {
+    public PCBean(int id, List<PCComponent> components) {
         this.id = id;
-        this.processorId = processorId;
-        this.ramId = ramId;
-        this.graphicCardId = graphicCardId;
-        this.price = price;
+        this.components = components;
     }
 
     @Override
@@ -37,49 +34,30 @@ public final class PCBean implements Idable{
         return id;
     }
 
-    public int getProcessorId() {
-        return processorId;
+    public List<PCComponent> getComponents() {
+        return components;
     }
 
-    public void setProcessorId(int processorId) {
-        this.processorId = processorId;
-    }
-
-    public int getRamId() {
-        return ramId;
-    }
-
-    public void setRamId(int ramId) {
-        this.ramId = ramId;
-    }
-
-    public int getGraphicCardId() {
-        return graphicCardId;
-    }
-
-    public void setGraphicCardId(int graphicCardId) {
-        this.graphicCardId = graphicCardId;
+    public void setComponents(List<PCComponent> components) {
+        this.components = components;
     }
 
     public double getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
-        this.price = price;
-    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         PCBean pcBean = (PCBean) o;
-        return id == pcBean.id && processorId == pcBean.processorId && ramId == pcBean.ramId && graphicCardId == pcBean.graphicCardId;
+        return id == pcBean.id && pcBean.getComponents().equals(components);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, processorId, ramId, graphicCardId);
+        return Objects.hash(id, components);
     }
 
 
@@ -87,10 +65,6 @@ public final class PCBean implements Idable{
     public String toString() {
         return "PCBean{" +
                 "id=" + id +
-                ", processorId=" + processorId +
-                ", ramId=" + ramId +
-                ", graphicCardId=" + graphicCardId +
-                ", price=" + price +
-                '}';
+                ", components=" + components;
     }
 }
