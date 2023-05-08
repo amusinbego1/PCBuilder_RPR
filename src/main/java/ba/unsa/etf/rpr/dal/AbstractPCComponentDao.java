@@ -67,20 +67,7 @@ public abstract class AbstractPCComponentDao extends AbstractDao<PCComponent> {
     public List<? extends PCComponent> getByManufacturer(String manufacturer) throws PCBuilderException{
         return executeQuery("SELECT * FROM " + this.getTableName() + " WHERE manufacturer = ?;", new Object[]{manufacturer});
     }
-
-    public PCComponent getComponentById(int id) throws PCBuilderException{
-        List<? extends PCComponent> components = executeQuery("SELECT * FROM " + this.getTableName() + " WHERE " + getIdProperty() + " = ?;", new Object[]{id});
-        if(components.isEmpty())
-            throw new PCBuilderException("Cannot find component with given id");
-        return components.get(0);
-    }
-
-
-    public List<? extends PCComponent> getAllComponents() throws PCBuilderException{
-        return executeQuery("SELECT * FORM " + this.getTableName() + ";", null);
-    }
-
-
+    
     public List<? extends PCComponent> getComponentsWithPriceBetween(double lowPrice, double highPrice) throws PCBuilderException{
         return executeQuery("SELECT * FROM " + this.getTableName() + " WHERE price >= ? AND price <= ?;", new Object[]{lowPrice, highPrice});
     }
