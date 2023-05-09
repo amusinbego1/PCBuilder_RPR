@@ -136,8 +136,6 @@ public abstract class AbstractDao<T extends Idable> implements Dao<T> {
         Map<String, Object> row = objectToRow(item);
         for(String key: row.keySet())
             rowList.add(row.get(key));
-        if(!rowList.isEmpty())
-            rowList.remove(0);
         return rowList.toArray();
     }
 
@@ -147,7 +145,7 @@ public abstract class AbstractDao<T extends Idable> implements Dao<T> {
         try {
             Statement statement = this.connection.createStatement();
             ResultSetMetaData rsMetaData = statement.executeQuery("SELECT * FROM " + tableName + " WHERE 1=0;").getMetaData();
-            for(int i=2; i<=rsMetaData.getColumnCount(); i++)
+            for(int i=1; i<=rsMetaData.getColumnCount(); i++)
                 columnNamesList.add(rsMetaData.getColumnName(i));
         } catch (SQLException e) {
             throw new PCBuilderException("Cannot get column names");
