@@ -33,7 +33,8 @@ CREATE TABLE `graphcards` (
   `graphcard_desc` text,
   `price` decimal(7,2) NOT NULL,
   PRIMARY KEY (`graphcard_id`),
-  CONSTRAINT `valid_graphcard_price` CHECK ((`price` >= 0))
+  CONSTRAINT `valid_graphcard_price` CHECK ((`price` >= 0)),
+  CONSTRAINT `unique_graphcard` UNIQUE(`graphcard_name`, `graphcard_desc`(255), manufacturer, `shop_url`(255))
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -56,7 +57,6 @@ DROP TABLE IF EXISTS `pcs`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `pcs` (
   `pc_id` int NOT NULL AUTO_INCREMENT,
-  `price` decimal(8,2) NOT NULL,
   `ram_id` int NOT NULL,
   `processor_id` int NOT NULL,
   `graphcard_id` int NOT NULL,
@@ -66,7 +66,8 @@ CREATE TABLE `pcs` (
   KEY `graphcard_id` (`graphcard_id`),
   CONSTRAINT `pcs_ibfk_1` FOREIGN KEY (`ram_id`) REFERENCES `rams` (`ram_id`) ON DELETE CASCADE,
   CONSTRAINT `pcs_ibfk_2` FOREIGN KEY (`processor_id`) REFERENCES `processors` (`processor_id`) ON DELETE CASCADE,
-  CONSTRAINT `pcs_ibfk_3` FOREIGN KEY (`graphcard_id`) REFERENCES `graphcards` (`graphcard_id`) ON DELETE CASCADE
+  CONSTRAINT `pcs_ibfk_3` FOREIGN KEY (`graphcard_id`) REFERENCES `graphcards` (`graphcard_id`) ON DELETE CASCADE,
+  CONSTRAINT `unique_pc` UNIQUE (`ram_id`, `processor_id`, `graphcard_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -95,7 +96,8 @@ CREATE TABLE `processors` (
   `processor_desc` text,
   `price` decimal(7,2) NOT NULL,
   PRIMARY KEY (`processor_id`),
-  CONSTRAINT `valid_processor_price` CHECK ((`price` >= 0))
+  CONSTRAINT `valid_processor_price` CHECK ((`price` >= 0)),
+  CONSTRAINT `unique_processor` UNIQUE(`processor_name`, `processor_desc`(255), `manufacturer`, `shop_url`(255))
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -125,7 +127,8 @@ CREATE TABLE `rams` (
   `ram_desc` text,
   `price` decimal(7,2) NOT NULL,
   PRIMARY KEY (`ram_id`),
-  CONSTRAINT `valid_ram_price` CHECK ((`price` >= 0))
+  CONSTRAINT `valid_ram_price` CHECK ((`price` >= 0)),
+  CONSTRAINT `unique_ram` UNIQUE(`ram_name`, `ram_desc`(255), `manufacturer`, `shop_url`(255))
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 

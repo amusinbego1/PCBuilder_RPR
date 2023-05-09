@@ -5,7 +5,6 @@ import ba.unsa.etf.rpr.exceptions.PCBuilderException;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -57,8 +56,8 @@ public abstract class AbstractPCComponentDao extends AbstractDao<PCComponent> {
         row.put("manufacturer", object.getManufacturer());
         row.put("shop_url", object.getBuyUrl());
         row.put("img_url", object.getImgUrl());
-        row.put("price", object.getPrice());
         row.put(getDescProperty(), object.getDesc());
+        row.put("price", object.getPrice());
         return row;
     }
 
