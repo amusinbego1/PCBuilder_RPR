@@ -6,14 +6,12 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.swing.plaf.nimbus.State;
+import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
+import java.util.*;
 
 public abstract class AbstractDao<T extends Idable> implements Dao<T> {
     private Connection connection;
@@ -40,7 +38,7 @@ public abstract class AbstractDao<T extends Idable> implements Dao<T> {
     }
 
     private void injectSQLDatabase() throws PCBuilderException{
-        try(FileInputStream input = new FileInputStream(new File(ClassLoader.getSystemResource("dbdump.sql").toURI()))){
+        try(DataInputStream input = new DataInputStream(Objects.requireNonNull(ClassLoader.getSystemResourceAsStream("dbdump.sql")))){
             String DbSql = new String(input.readAllBytes());
             for(String sqlCommand: DbSql.split(";")){
                 Statement statement = this.connection.createStatement();
