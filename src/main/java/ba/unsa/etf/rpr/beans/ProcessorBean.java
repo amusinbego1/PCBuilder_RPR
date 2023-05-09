@@ -9,8 +9,8 @@ public final class ProcessorBean extends PCComponent{
         super();
     }
 
-    public ProcessorBean(int id, String name, String manufacturer, String desc, String buyUrl, String imgUrl, double price) {
-        super(id, name, manufacturer, desc, buyUrl, imgUrl, price);
+    public ProcessorBean(int id, String name, String manufacturer, String buyUrl, String imgUrl, String desc, double price) {
+        super(id, name, manufacturer, buyUrl, imgUrl, desc, price);
     }
 
     @Override

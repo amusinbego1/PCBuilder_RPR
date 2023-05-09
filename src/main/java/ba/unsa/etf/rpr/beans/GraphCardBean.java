@@ -8,8 +8,8 @@ public final class GraphCardBean extends PCComponent{
         super();
     }
 
-    public GraphCardBean(int id, String name, String manufacturer, String desc, String buyUrl, String imgUrl, double price) {
-        super(id, name, manufacturer, desc, buyUrl, imgUrl, price);
+    public GraphCardBean(int id, String name, String manufacturer, String buyUrl, String imgUrl, String desc, double price) {
+        super(id, name, manufacturer, buyUrl, imgUrl, desc, price);
     }
 
 
