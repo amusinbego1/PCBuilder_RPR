@@ -35,6 +35,15 @@ public abstract class PCComponent implements Idable {
         this.imgUrl = imgUrl;
         this.price = price;
     }
+    public PCComponent(String name, String manufacturer, String buyUrl, String imgUrl, String desc, double price) {
+        this.id = 0;
+        this.name = name;
+        this.manufacturer = manufacturer;
+        this.desc = desc;
+        this.buyUrl = buyUrl;
+        this.imgUrl = imgUrl;
+        this.price = price;
+    }
 
     public String getName() {
         return name;

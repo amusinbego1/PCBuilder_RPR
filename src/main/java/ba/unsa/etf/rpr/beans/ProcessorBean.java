@@ -12,6 +12,9 @@ public final class ProcessorBean extends PCComponent{
     public ProcessorBean(int id, String name, String manufacturer, String buyUrl, String imgUrl, String desc, double price) {
         super(id, name, manufacturer, buyUrl, imgUrl, desc, price);
     }
+    public ProcessorBean(String name, String manufacturer, String buyUrl, String imgUrl, String desc, double price) {
+        super(name, manufacturer, buyUrl, imgUrl, desc, price);
+    }
 
     @Override
     public String toString() {

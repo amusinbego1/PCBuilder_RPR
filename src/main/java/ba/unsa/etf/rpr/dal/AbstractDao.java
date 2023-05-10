@@ -119,10 +119,18 @@ public abstract class AbstractDao<T extends Idable> implements Dao<T> {
         return item;
     }
 
+    private String idZeroCheck(T item, String columnNames){
+        if(item.getId() == 0){
+            StringBuilder names = new StringBuilder(columnNames);
+            return names.delete(0, columnNames.indexOf(",") + 1).toString();
+        }
+        return columnNames;
+    }
+
     @Override
     public T add(T item) throws PCBuilderException {
         try{
-            String columnNames = getColumnNames();
+            String columnNames = idZeroCheck(item, getColumnNames());
             executeQuery("INSERT INTO " + this.tableName + " (" + columnNames + ") VALUES (" + "?,".repeat(StringUtils.countMatches(columnNames, ","))  + " ?);", getItemArray(item));
         }
         catch(PCBuilderException e){
@@ -136,6 +144,8 @@ public abstract class AbstractDao<T extends Idable> implements Dao<T> {
         Map<String, Object> row = objectToRow(item);
         for(String key: row.keySet())
             rowList.add(row.get(key));
+        if(!rowList.isEmpty() && item.getId() == 0)
+            rowList.remove(0);
         return rowList.toArray();
     }
 

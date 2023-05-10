@@ -24,6 +24,10 @@ public class PCBean implements Idable {
         this.components = components;
     }
 
+    public PCBean(List<PCComponent> components) {
+        this.id = 0;
+        this.components = components;
+    }
     @Override
     public void setId(int id) {
         this.id = id;

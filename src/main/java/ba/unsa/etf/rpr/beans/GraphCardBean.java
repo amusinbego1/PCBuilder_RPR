@@ -11,7 +11,9 @@ public final class GraphCardBean extends PCComponent{
     public GraphCardBean(int id, String name, String manufacturer, String buyUrl, String imgUrl, String desc, double price) {
         super(id, name, manufacturer, buyUrl, imgUrl, desc, price);
     }
-
+    public GraphCardBean(String name, String manufacturer, String buyUrl, String imgUrl, String desc, double price) {
+        super(name, manufacturer, buyUrl, imgUrl, desc, price);
+    }
 
     @Override
     public boolean equals(Object o) {
