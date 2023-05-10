@@ -61,22 +61,22 @@ public abstract class AbstractPCComponentDao extends AbstractDao<PCComponent> {
         return row;
     }
 
-    public List<? extends PCComponent> getComponentsByName(String name) throws PCBuilderException {
-        return executeQuery("SELECT * FROM " + this.getTableName() + " WHERE " + getNameProperty() + " = ?;", new Object[] {name});
+    public List<? extends PCComponent> getByName(String name) throws PCBuilderException {
+        return executeQuery("SELECT * FROM " + this.getTableName() + " WHERE LOWER(" + getNameProperty() + ") LIKE CONCAT( '%', ?, '%');", new Object[] {name.toLowerCase()});
     }
 
     public List<? extends PCComponent> getByManufacturer(String manufacturer) throws PCBuilderException{
-        return executeQuery("SELECT * FROM " + this.getTableName() + " WHERE manufacturer = ?;", new Object[]{manufacturer});
+        return executeQuery("SELECT * FROM " + this.getTableName() + " WHERE LOWER(manufacturer) LIKE CONCAT( '%', ?, '%');", new Object[]{manufacturer.toLowerCase()});
     }
     
-    public List<? extends PCComponent> getComponentsWithPriceBetween(double lowPrice, double highPrice) throws PCBuilderException{
+    public List<? extends PCComponent> getWithPriceBetween(double lowPrice, double highPrice) throws PCBuilderException{
         return executeQuery("SELECT * FROM " + this.getTableName() + " WHERE price >= ? AND price <= ?;", new Object[]{lowPrice, highPrice});
     }
-    public List<? extends PCComponent> getComponentsWithHigherPrice(double price) throws PCBuilderException{
+    public List<? extends PCComponent> getWithHigherPrice(double price) throws PCBuilderException{
         return executeQuery("SELECT * FROM " + this.getTableName() + " WHERE price >= ?;", new Object[]{price});
     }
 
-    public List<? extends PCComponent> getComponentsWithLowerPrice(double price) throws PCBuilderException{
+    public List<? extends PCComponent> getWithLowerPrice(double price) throws PCBuilderException{
         return executeQuery("SELECT * FROM " + this.getTableName() + " WHERE price <= ?;", new Object[]{price});
     }
 
