@@ -62,11 +62,11 @@ public abstract class AbstractPCComponentDao extends AbstractDao<PCComponent> {
     }
 
     public List<? extends PCComponent> getByName(String name) throws PCBuilderException {
-        return executeQuery("SELECT * FROM " + this.getTableName() + " WHERE LOWER(" + getNameProperty() + ") LIKE CONCAT( '%', ?, '%');", new Object[] {name.toLowerCase()});
+        return executeQuery("SELECT * FROM " + this.getTableName() + " WHERE LOWER(" + getNameProperty() + ") LIKE CONCAT( '%', LOWER(?), '%');", new Object[] {name});
     }
 
     public List<? extends PCComponent> getByManufacturer(String manufacturer) throws PCBuilderException{
-        return executeQuery("SELECT * FROM " + this.getTableName() + " WHERE LOWER(manufacturer) LIKE CONCAT( '%', ?, '%');", new Object[]{manufacturer.toLowerCase()});
+        return executeQuery("SELECT * FROM " + this.getTableName() + " WHERE LOWER(manufacturer) LIKE CONCAT( '%', LOWER(?), '%');", new Object[]{manufacturer});
     }
     
     public List<? extends PCComponent> getWithPriceBetween(double lowPrice, double highPrice) throws PCBuilderException{
