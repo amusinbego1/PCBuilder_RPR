@@ -15,6 +15,13 @@ class PCBeanTest {
         component.setId(66);
         assertEquals(66, component.getId());
     }
-
+    @Test
+    void getPrice() {
+        PCBean pc = new PCBean(List.of(
+                new ProcessorBean("", "", "", "", "", 5),
+                new RamBean("", "", "", "", "", 3),
+                new GraphCardBean("", "", "", "", "", 2)));
+        assertEquals(10, pc.getPrice());
+    }
     
 }
