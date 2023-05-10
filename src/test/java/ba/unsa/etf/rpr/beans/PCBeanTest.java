@@ -23,5 +23,24 @@ class PCBeanTest {
                 new GraphCardBean("", "", "", "", "", 2)));
         assertEquals(10, pc.getPrice());
     }
-    
+
+    @Test
+    void getComponentSuccess() throws PCBuilderException {
+        PCBean pc = new PCBean(List.of(
+                new ProcessorBean("", "", "", "", "", 5),
+                new RamBean("", "", "", "", "", 3),
+                new GraphCardBean("", "", "", "", "", 2)));
+        assertEquals("ba.unsa.etf.rpr.beans.RamBean", pc.getComponent("ram").getClass().getName());
+    }
+
+    @Test
+    void getComponentThrow(){
+        PCBean pc = new PCBean(List.of(
+                new ProcessorBean("", "", "", "", "", 5),
+                new RamBean("", "", "", "", "", 3),
+                new GraphCardBean("", "", "", "", "", 2)));
+        assertThrows(PCBuilderException.class, () -> {
+            pc.getComponent("motherboard");
+        });
+    }
 }
