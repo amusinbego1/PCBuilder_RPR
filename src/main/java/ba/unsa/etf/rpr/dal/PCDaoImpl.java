@@ -10,12 +10,11 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-public class PCDaoImpl extends AbstractDao<PCBean> implements PCDao {
+public class PCDaoImpl extends AbstractPCDao {
     private static PCDaoImpl instance = null;
     private PCDaoImpl(String tableName) {
         super(tableName);
     }
-
     public static PCDaoImpl getInstance(){
         if(instance == null)
             instance = new PCDaoImpl("pcs");
@@ -26,7 +25,7 @@ public class PCDaoImpl extends AbstractDao<PCBean> implements PCDao {
     public PCBean rowToObject(ResultSet resultSet) throws PCBuilderException {
         try {
             return new PCBean(resultSet.getInt("pc_id"), List.of(
-                DaoFactory.getProcessorDao().getById(resultSet.getInt("processor_id")),
+                    DaoFactory.getProcessorDao().getById(resultSet.getInt("processor_id")),
                     DaoFactory.getRamDao().getById(resultSet.getInt("ram_id")),
                     DaoFactory.getGraphCardDao().getById(resultSet.getInt("graphcard_id"))
             ));
@@ -46,15 +45,4 @@ public class PCDaoImpl extends AbstractDao<PCBean> implements PCDao {
         return row;
     }
 
-    @Override
-    public void addPCs(List<PCBean> pcs) throws PCBuilderException {
-        for (PCBean pc : pcs)
-            this.add(pc);
-    }
-
-
-    @Override
-    public void removeAll() throws PCBuilderException {
-        executeQuery("DELETE FROM " + this.getTableName(), null);
-    }
 }
