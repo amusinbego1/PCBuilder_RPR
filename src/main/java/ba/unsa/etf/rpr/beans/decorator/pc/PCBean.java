@@ -18,6 +18,10 @@ public class PCBean extends PC{
         super(components);
     }
 
+    public PCBean() {
+        super();
+    }
+
     @Override
     public PCComponent getComponent(String componentType) throws PCBuilderException {
         for (PCComponent component : getComponents())
