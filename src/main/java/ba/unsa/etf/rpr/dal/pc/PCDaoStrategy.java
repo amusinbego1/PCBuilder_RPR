@@ -1,4 +1,4 @@
-package ba.unsa.etf.rpr.dal;
+package ba.unsa.etf.rpr.dal.pc;
 
 public class PCDaoStrategy {
     private static PCDao pcDao = null;
