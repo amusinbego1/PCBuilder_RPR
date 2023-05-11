@@ -1,5 +1,6 @@
 package ba.unsa.etf.rpr.beans;
 
+import ba.unsa.etf.rpr.beans.decorator.pc.PCBean;
 import ba.unsa.etf.rpr.exceptions.PCBuilderException;
 import org.junit.jupiter.api.Test;
 
@@ -33,6 +34,14 @@ class PCBeanTest {
         assertEquals("ba.unsa.etf.rpr.beans.RamBean", pc.getComponent("ram").getClass().getName());
     }
 
+    @Test
+    void getComponentSuccess2() throws PCBuilderException {
+        PCBean pc = new PCBean(List.of(
+                new ProcessorBean("", "", "", "", "", 5),
+                new RamBean("", "", "", "", "", 3),
+                new GraphCardBean("", "", "", "", "", 2)));
+        assertEquals("ba.unsa.etf.rpr.beans.GraphCardBean", pc.getComponent("graphcard").getClass().getName());
+    }
     @Test
     void getComponentThrow(){
         PCBean pc = new PCBean(List.of(
