@@ -82,8 +82,6 @@ public abstract class PC implements Idable {
 
     @Override
     public String toString() {
-        return "PCBean{" +
-                "id=" + id +
-                ", components=" + components;
+        return "PCBean = " + components;
     }
 }
