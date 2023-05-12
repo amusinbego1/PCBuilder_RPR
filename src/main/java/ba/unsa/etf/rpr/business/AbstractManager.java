@@ -16,7 +16,7 @@ public abstract class AbstractManager<T extends Idable> {
         getDao().deleteById(id);
     }
 
-    public List<T> getAll() throws PCBuilderException{
+    public List<? extends T> getAll() throws PCBuilderException{
         return getDao().getAll();
     }
 
