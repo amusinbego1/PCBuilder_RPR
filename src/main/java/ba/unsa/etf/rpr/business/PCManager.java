@@ -6,15 +6,15 @@ import ba.unsa.etf.rpr.dal.DaoFactory;
 import ba.unsa.etf.rpr.dal.pc.PCDao;
 import ba.unsa.etf.rpr.dal.pc.PCDaoImpl;
 
-public class PCBeanManager extends AbstractPCManager{
+public class PCManager extends AbstractPCManager{
 
     private static PCDao pcDao = DaoFactory.getPCDao(PCDaoImpl.getInstance());
 
-    public PCBeanManager(PCDao dao) {
+    public PCManager(PCDao dao) {
         pcDao = dao;
     }
 
-    public PCBeanManager(){
+    public PCManager(){
 
     }
 
