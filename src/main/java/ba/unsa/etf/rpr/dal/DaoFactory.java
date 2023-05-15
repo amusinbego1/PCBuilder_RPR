@@ -1,10 +1,11 @@
 package ba.unsa.etf.rpr.dal;
 
 import ba.unsa.etf.rpr.dal.pc.PCDao;
-import ba.unsa.etf.rpr.dal.pc.PCDaoStrategy;
+import ba.unsa.etf.rpr.dal.pc.PCDaoImpl;
 
 public class DaoFactory {
 
+    private static PCDao pcDao = PCDaoImpl.getInstance();
     private DaoFactory(){}
 
     public static AbstractPCComponentDao getProcessorDao(){
@@ -19,8 +20,11 @@ public class DaoFactory {
         return RamDaoImpl.getInstance();
     }
 
-    public static PCDao getPCDao(PCDao pcDao){
-        PCDaoStrategy.setPCDao(pcDao);
-        return PCDaoStrategy.getPcDao();
+    public static void setPcDao(PCDao dao){
+        pcDao = dao;
+    }
+
+    public static PCDao getPCDao(){
+        return pcDao;
     }
 }
