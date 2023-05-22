@@ -5,20 +5,20 @@ import ba.unsa.etf.rpr.beans.RamBean;
 import ba.unsa.etf.rpr.dal.AbstractPCComponentDao;
 import ba.unsa.etf.rpr.dal.RamDaoImpl;
 import ba.unsa.etf.rpr.exceptions.PCBuilderException;
+import junitparams.JUnitParamsRunner;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.Spy;
-import org.mockito.junit.jupiter.MockitoExtension;
-
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.runner.RunWith;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+@RunWith(JUnitParamsRunner.class)
 class AbstractPCComponentManagerTest {
 
 
@@ -68,7 +68,26 @@ class AbstractPCComponentManagerTest {
         assertEquals(2, ramManagerMock.getByManufacturer("Intel").size());
     }
 
-    @Test
-    void getWithPriceBetweenTest() {
+
+    private static Object[] parametersToHigherTest(){
+        return new Object[]{
+                new Object[]{10., 2},
+                new Object[]{110., 1},
+                new Object[]{200., 0}
+        };
     }
+
+    @ParameterizedTest
+    @MethodSource("parametersToHigherTest")
+    void getWithHigherPriceTest(double price, int expectedSize) throws PCBuilderException {
+        doAnswer((invocation) -> {
+            List<PCComponent> filteredComponents = new ArrayList<>();
+            for (PCComponent component : components)
+                if (component.getPrice() > (Double)invocation.getArguments()[0])
+                    filteredComponents.add(component);
+            return filteredComponents;
+        }).when(dao).getWithHigherPrice(anyDouble());
+        assertEquals(expectedSize, ramManagerMock.getWithHigherPrice(price).size());
+    }
+
 }
