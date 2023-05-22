@@ -56,7 +56,16 @@ class AbstractPCComponentManagerTest {
     }
 
     @Test
-    void getByManufacturerTest() {
+    void getByManufacturerTest() throws PCBuilderException {
+        components.add(new RamBean(3, "Trident Z5 NEO", "Intel", "no url", "no  url", "no desc", 100));
+        doAnswer((invocation) -> {
+            List<PCComponent> filteredComponents = new ArrayList<>();
+            for (PCComponent component : components)
+                if (component.getManufacturer().equals(invocation.getArguments()[0]))
+                    filteredComponents.add(component);
+            return filteredComponents;
+        }).when(dao).getByManufacturer("Intel");
+        assertEquals(2, ramManagerMock.getByManufacturer("Intel").size());
     }
 
     @Test
