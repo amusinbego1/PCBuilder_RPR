@@ -69,7 +69,7 @@ class AbstractPCComponentManagerTest {
     }
 
 
-    private static Object[] parametersToHigherTest(){
+    private static Object[] parametersToHigherPriceTest(){
         return new Object[]{
                 new Object[]{10., 2},
                 new Object[]{110., 1},
@@ -78,7 +78,7 @@ class AbstractPCComponentManagerTest {
     }
 
     @ParameterizedTest
-    @MethodSource("parametersToHigherTest")
+    @MethodSource("parametersToHigherPriceTest")
     void getWithHigherPriceTest(double price, int expectedSize) throws PCBuilderException {
         doAnswer((invocation) -> {
             List<PCComponent> filteredComponents = new ArrayList<>();
@@ -90,7 +90,7 @@ class AbstractPCComponentManagerTest {
         assertEquals(expectedSize, ramManagerMock.getWithHigherPrice(price).size());
     }
 
-    private static Object[] parametersToLowerTest(){
+    private static Object[] parametersToLowerPriceTest(){
         return new Object[]{
                 new Object[]{10., 0},
                 new Object[]{110., 1},
@@ -98,7 +98,7 @@ class AbstractPCComponentManagerTest {
         };
     }
     @ParameterizedTest
-    @MethodSource("parametersToLowerTest")
+    @MethodSource("parametersToLowerPriceTest")
     void getWithLowerPriceTest(double price, int expectedSize) throws PCBuilderException {
         doAnswer((invocation) -> {
             List<PCComponent> filteredComponents = new ArrayList<>();
@@ -108,5 +108,28 @@ class AbstractPCComponentManagerTest {
             return filteredComponents;
         }).when(dao).getWithLowerPrice(anyDouble());
         assertEquals(expectedSize, ramManagerMock.getWithLowerPrice(price).size());
+    }
+
+    private static Object[] parametersToBetweenPriceTest(){
+        return new Object[]{
+                new Object[]{0., 90., 0},
+                new Object[]{50., 120., 1},
+                new Object[]{110., 130., 0},
+                new Object[]{130., 170., 1},
+                new Object[]{50., 200., 2}
+        };
+    }
+
+    @ParameterizedTest
+    @MethodSource("parametersToBetweenPriceTest")
+    void getWithPriceBetweenTest(double low, double high, int expectedSize) throws PCBuilderException{
+        doAnswer(invocation -> {
+            List<PCComponent> filteredComponents = new ArrayList<>();
+            for(PCComponent component: components)
+                if(component.getPrice() > (Double)invocation.getArguments()[0] && component.getPrice() < (Double)invocation.getArguments()[1])
+                    filteredComponents.add(component);
+            return filteredComponents;
+        }).when(dao).getWithPriceBetween(anyDouble(), anyDouble());
+        assertEquals(expectedSize, ramManagerMock.getWithPriceBetween(low, high).size());
     }
 }
