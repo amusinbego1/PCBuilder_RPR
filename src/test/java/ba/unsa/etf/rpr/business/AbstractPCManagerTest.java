@@ -43,7 +43,17 @@ class AbstractPCManagerTest {
         ));
     }
 
-   
+    @Test
+    void removeAllTest() throws PCBuilderException {
+        doAnswer(invocation -> {
+            pcs.clear();
+            return pcs;
+        }).when(dao).removeAll();
+        doReturn(pcs).when(dao).getAll();
+
+        pcManager.removeAll();
+        assertEquals(0, pcManager.getAll().size());
+    }
 
 
 }
