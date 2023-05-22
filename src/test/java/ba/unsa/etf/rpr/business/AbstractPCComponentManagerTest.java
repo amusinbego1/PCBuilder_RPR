@@ -45,14 +45,14 @@ class AbstractPCComponentManagerTest {
 
     @Test
     void getByNameTest() throws PCBuilderException {
-//        doAnswer((invocation) -> {
-//            List<PCComponent> filteredComponents = new ArrayList<>();
-//            for (PCComponent component : components)
-//                if (component.getName().equals(invocation.getArguments()[0]))
-//                    filteredComponents.add(component);
-//            return filteredComponents;
-//        }).when(dao).getByName(anyString());
-//        assertEquals(1, ramManagerMock.getByName("Trident Z5 NEO").get(0).getId());
+        doAnswer((invocation) -> {
+            List<PCComponent> filteredComponents = new ArrayList<>();
+            for (PCComponent component : components)
+                if (component.getName().equals(invocation.getArguments()[0]))
+                    filteredComponents.add(component);
+            return filteredComponents;
+        }).when(dao).getByName(anyString());
+        assertEquals(1, ramManagerMock.getByName("Trident Z5 NEO").get(0).getId());
     }
 
     @Test
