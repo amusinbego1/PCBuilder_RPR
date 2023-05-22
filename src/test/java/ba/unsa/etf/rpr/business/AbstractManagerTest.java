@@ -1,11 +1,12 @@
 package ba.unsa.etf.rpr.business;
 import ba.unsa.etf.rpr.beans.PCComponent;
 import ba.unsa.etf.rpr.beans.ProcessorBean;
+import ba.unsa.etf.rpr.dal.AbstractPCComponentDao;
 import ba.unsa.etf.rpr.exceptions.PCBuilderException;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,9 +16,9 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class AbstractManagerTest {
 
-    @Mock
-    private static ProcessorManager processorManagerMock;
-    
+    private static final ProcessorManager processorManagerMock = spy(new ProcessorManager());
+
+    private static AbstractPCComponentDao dao;
     private List<PCComponent> components;
     @BeforeEach
     public void setupEach() throws PCBuilderException {
@@ -26,9 +27,15 @@ class AbstractManagerTest {
                 new ProcessorBean(2,"HexaCore", "Intel", "no url", "no url", "Some random desc...", 23)));
     }
 
+    @BeforeAll
+    public static void setupAll() throws PCBuilderException{
+        dao = mock(AbstractPCComponentDao.class);
+        doReturn(dao).when(processorManagerMock).getDao();
+    }
+
     @Test
     public void getAllTest() throws PCBuilderException {
-        doReturn(components).when(processorManagerMock).getAll();
+        doReturn(components).when(dao).getAll();
         int size = processorManagerMock.getAll().size();
         assertEquals(2, size);
     }
@@ -36,10 +43,14 @@ class AbstractManagerTest {
     @Test
     public void updateTest() throws PCBuilderException{
         PCComponent newProcessor = new ProcessorBean(2,"PentaCore", "Intel", "no url", "no url", "Some random desc...", 23);
-        for(int i=0; i<components.size(); i++)
-            if(components.get(i).getId() == newProcessor.getId())
-                components.set(i, newProcessor);
-        assertEquals("PentaCore", components.get(1).getName());
+        doAnswer(invocation -> {
+            PCComponent theComponent = (PCComponent)invocation.getArguments()[0];
+            for(int i=0; i<components.size(); i++)
+                if(components.get(i).getId() == theComponent.getId())
+                    components.set(i, theComponent);
+            return theComponent;
+        }).when(dao).update(any(PCComponent.class));
+        assertEquals("PentaCore", processorManagerMock.update(newProcessor).getName());
     }
 
 

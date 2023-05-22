@@ -6,9 +6,7 @@ package ba.unsa.etf.rpr;
  */
 
 /*TODO
-    1. Make model/managers
-    2. Try to make PCBean using Decorator Pattern
-    2. Use dal tests for creating mocked tests for managers
+    1. Change test methods names
  */
 public class App 
 {
