@@ -90,4 +90,23 @@ class AbstractPCComponentManagerTest {
         assertEquals(expectedSize, ramManagerMock.getWithHigherPrice(price).size());
     }
 
+    private static Object[] parametersToLowerTest(){
+        return new Object[]{
+                new Object[]{10., 0},
+                new Object[]{110., 1},
+                new Object[]{200., 2}
+        };
+    }
+    @ParameterizedTest
+    @MethodSource("parametersToLowerTest")
+    void getWithLowerPriceTest(double price, int expectedSize) throws PCBuilderException {
+        doAnswer((invocation) -> {
+            List<PCComponent> filteredComponents = new ArrayList<>();
+            for (PCComponent component : components)
+                if (component.getPrice() < (Double)invocation.getArguments()[0])
+                    filteredComponents.add(component);
+            return filteredComponents;
+        }).when(dao).getWithLowerPrice(anyDouble());
+        assertEquals(expectedSize, ramManagerMock.getWithLowerPrice(price).size());
+    }
 }
