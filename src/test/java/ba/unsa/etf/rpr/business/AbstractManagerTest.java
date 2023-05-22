@@ -17,20 +17,30 @@ class AbstractManagerTest {
 
     @Mock
     private static ProcessorManager processorManagerMock;
-    @Mock
-    private static RamManager ramManagerMock;
-    @Mock
-    private static PCBeanManager pcBeanManagerMock;
-
-
-    private List<? extends PCComponent> components;
+    
+    private List<PCComponent> components;
     @BeforeEach
     public void setupEach() throws PCBuilderException {
-        components = new ArrayList<>(List.of(
+        components = new ArrayList<PCComponent>(List.of(
                 new ProcessorBean(1,"ThreadRipper", "Intel", "no url", "no url", "Some bad desc", 66),
                 new ProcessorBean(2,"HexaCore", "Intel", "no url", "no url", "Some random desc...", 23)));
     }
-    
+
+    @Test
+    public void getAllTest() throws PCBuilderException {
+        doReturn(components).when(processorManagerMock).getAll();
+        int size = processorManagerMock.getAll().size();
+        assertEquals(2, size);
+    }
+
+    @Test
+    public void updateTest() throws PCBuilderException{
+        PCComponent newProcessor = new ProcessorBean(2,"PentaCore", "Intel", "no url", "no url", "Some random desc...", 23);
+        for(int i=0; i<components.size(); i++)
+            if(components.get(i).getId() == newProcessor.getId())
+                components.set(i, newProcessor);
+        assertEquals("PentaCore", components.get(1).getName());
+    }
 
 
 }
