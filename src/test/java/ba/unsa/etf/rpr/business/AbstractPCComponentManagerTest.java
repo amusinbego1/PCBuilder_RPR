@@ -8,6 +8,7 @@ import ba.unsa.etf.rpr.exceptions.PCBuilderException;
 import junitparams.JUnitParamsRunner;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -18,6 +19,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+@Order(4)
 @RunWith(JUnitParamsRunner.class)
 class AbstractPCComponentManagerTest {
 

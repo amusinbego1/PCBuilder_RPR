@@ -5,6 +5,7 @@ import ba.unsa.etf.rpr.dal.AbstractPCComponentDao;
 import ba.unsa.etf.rpr.exceptions.PCBuilderException;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -13,6 +14,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+@Order(3)
 @ExtendWith(MockitoExtension.class)
 class AbstractManagerTest {
 

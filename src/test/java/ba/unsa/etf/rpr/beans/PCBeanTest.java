@@ -3,12 +3,14 @@ package ba.unsa.etf.rpr.beans;
 import ba.unsa.etf.rpr.beans.decorator.pc.PCBean;
 import ba.unsa.etf.rpr.exceptions.PCBuilderException;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@Order(2)
 class PCBeanTest {
 
     private PCBean pc;
