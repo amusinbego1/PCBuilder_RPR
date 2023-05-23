@@ -6,10 +6,7 @@ import ba.unsa.etf.rpr.dal.AbstractPCComponentDao;
 import ba.unsa.etf.rpr.dal.RamDaoImpl;
 import ba.unsa.etf.rpr.exceptions.PCBuilderException;
 import junitparams.JUnitParamsRunner;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.runner.RunWith;
@@ -45,8 +42,11 @@ class AbstractPCComponentManagerTest {
     }
 
 
-    @Test
-    void getByNameTest() throws PCBuilderException {
+    @ParameterizedTest
+    @CsvSource({"Trident Z5 NEO", "Corsair Vengeance Dominator"})
+    @DisplayName("Get PCComponent by its name (success)")
+    void testGetByName_GetPCComponentByItsName_ShouldReturnCorrectSizeOfReturnedComponents(String name) throws PCBuilderException {
+        components.add(new RamBean(3, "Trident Z5 NEO", "Intel", "no url", "no  url", "no desc", 100));
         doAnswer((invocation) -> {
             List<PCComponent> filteredComponents = new ArrayList<>();
             for (PCComponent component : components)
@@ -54,11 +54,12 @@ class AbstractPCComponentManagerTest {
                     filteredComponents.add(component);
             return filteredComponents;
         }).when(dao).getByName(anyString());
-        assertEquals(1, ramManagerMock.getByName("Trident Z5 NEO").get(0).getId());
+        assertEquals(name.equals("Trident Z5 NEO")? 2: 1, ramManagerMock.getByName(name).size());
     }
 
     @Test
-    void getByManufacturerTest() throws PCBuilderException {
+    @DisplayName("Get PCComponent objects by manufacturer (success)")
+    void testGetByManufacturer_GetPCComponentsByManufacturer_ShouldReturnCorrectSizeOfReturnComponents() throws PCBuilderException {
         components.add(new RamBean(3, "Trident Z5 NEO", "Intel", "no url", "no  url", "no desc", 100));
         doAnswer((invocation) -> {
             List<PCComponent> filteredComponents = new ArrayList<>();
@@ -74,7 +75,8 @@ class AbstractPCComponentManagerTest {
     @CsvSource({"10., 2",
                 "110., 1",
                 "200., 0"})
-    void getWithHigherPriceTest(double price, int expectedSize) throws PCBuilderException {
+    @DisplayName("Get PCComponents that have bigger price)")
+    void testGetWithHigherPrice_GetPCComponentsThatAreMoreExpensive_ShouldReturnCorrectSizeOfReturnedComponents(double price, int expectedSize) throws PCBuilderException {
         doAnswer((invocation) -> {
             List<PCComponent> filteredComponents = new ArrayList<>();
             for (PCComponent component : components)
@@ -89,7 +91,8 @@ class AbstractPCComponentManagerTest {
     @CsvSource({"10., 0",
                 "110., 1",
                 "200., 2"})
-    void getWithLowerPriceTest(double price, int expectedSize) throws PCBuilderException {
+    @DisplayName("Get PCComponents that have smaller price")
+    void testGetWithLowerPrice_GetPCComponentsThatAreCheaper_ShouldReturnCorrectSizeOfReturnedComponents(double price, int expectedSize) throws PCBuilderException {
         doAnswer((invocation) -> {
             List<PCComponent> filteredComponents = new ArrayList<>();
             for (PCComponent component : components)
@@ -106,7 +109,8 @@ class AbstractPCComponentManagerTest {
                 "110., 130., 0",
                 "130., 170., 1",
                 "50., 200., 2"})
-    void getWithPriceBetweenTest(double low, double high, int expectedSize) throws PCBuilderException{
+    @DisplayName("Get PCComponents that have price between two given")
+    void testGetWithPriceBetween_GetPCComponentsThatHavePriceBetweenTwoGiven_ShouldReturnCorrectSizeOfReturnedComponents(double low, double high, int expectedSize) throws PCBuilderException{
         doAnswer(invocation -> {
             List<PCComponent> filteredComponents = new ArrayList<>();
             for(PCComponent component: components)
