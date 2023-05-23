@@ -10,7 +10,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.runner.RunWith;
 import java.util.ArrayList;
 import java.util.List;
@@ -68,17 +68,10 @@ class AbstractPCComponentManagerTest {
         assertEquals(2, ramManagerMock.getByManufacturer("Intel").size());
     }
 
-
-    private static Object[] parametersToHigherPriceTest(){
-        return new Object[]{
-                new Object[]{10., 2},
-                new Object[]{110., 1},
-                new Object[]{200., 0}
-        };
-    }
-
     @ParameterizedTest
-    @MethodSource("parametersToHigherPriceTest")
+    @CsvSource({"10., 2",
+                "110., 1",
+                "200., 0"})
     void getWithHigherPriceTest(double price, int expectedSize) throws PCBuilderException {
         doAnswer((invocation) -> {
             List<PCComponent> filteredComponents = new ArrayList<>();
@@ -90,15 +83,10 @@ class AbstractPCComponentManagerTest {
         assertEquals(expectedSize, ramManagerMock.getWithHigherPrice(price).size());
     }
 
-    private static Object[] parametersToLowerPriceTest(){
-        return new Object[]{
-                new Object[]{10., 0},
-                new Object[]{110., 1},
-                new Object[]{200., 2}
-        };
-    }
     @ParameterizedTest
-    @MethodSource("parametersToLowerPriceTest")
+    @CsvSource({"10., 0",
+                "110., 1",
+                "200., 2"})
     void getWithLowerPriceTest(double price, int expectedSize) throws PCBuilderException {
         doAnswer((invocation) -> {
             List<PCComponent> filteredComponents = new ArrayList<>();
@@ -110,18 +98,12 @@ class AbstractPCComponentManagerTest {
         assertEquals(expectedSize, ramManagerMock.getWithLowerPrice(price).size());
     }
 
-    private static Object[] parametersToBetweenPriceTest(){
-        return new Object[]{
-                new Object[]{0., 90., 0},
-                new Object[]{50., 120., 1},
-                new Object[]{110., 130., 0},
-                new Object[]{130., 170., 1},
-                new Object[]{50., 200., 2}
-        };
-    }
-
     @ParameterizedTest
-    @MethodSource("parametersToBetweenPriceTest")
+    @CsvSource({"0., 90., 0",
+                "50., 120., 1",
+                "110., 130., 0",
+                "130., 170., 1",
+                "50., 200., 2"})
     void getWithPriceBetweenTest(double low, double high, int expectedSize) throws PCBuilderException{
         doAnswer(invocation -> {
             List<PCComponent> filteredComponents = new ArrayList<>();
