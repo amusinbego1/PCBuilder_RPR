@@ -5,10 +5,7 @@ import ba.unsa.etf.rpr.beans.ProcessorBean;
 import ba.unsa.etf.rpr.dal.AbstractPCComponentDao;
 import ba.unsa.etf.rpr.exceptions.PCBuilderException;
 import junitparams.JUnitParamsRunner;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.runner.RunWith;
@@ -41,14 +38,16 @@ class AbstractManagerTest {
     }
 
     @Test
-    public void getAllTest() throws PCBuilderException {
+    @DisplayName("Get all components (success)")
+    public void testGetAll_GetsAllComponetsAndChecksForNumberOfComponents_ShouldReturnTwo() throws PCBuilderException {
         doReturn(components).when(dao).getAll();
         int size = processorManagerMock.getAll().size();
         assertEquals(2, size);
     }
 
     @Test
-    public void updateTest() throws PCBuilderException{
+    @DisplayName("Update one PCComponent object (success)")
+    public void testUpdate_UpdateOneProcessorWithTheNewOne_ShouldReturnNameOfTheNewProcessor() throws PCBuilderException{
         PCComponent newProcessor = new ProcessorBean(2,"PentaCore", "Intel", "no url", "no url", "Some random desc...", 23);
         doAnswer(invocation -> {
             PCComponent theComponent = (PCComponent)invocation.getArguments()[0];
@@ -62,7 +61,8 @@ class AbstractManagerTest {
 
     @ParameterizedTest
     @CsvSource({"1", "2"})
-    public void getByIdTestSuccess(int id) throws PCBuilderException{
+    @DisplayName("Get one PCComponent object by its ID (success)")
+    public void testGetById_GetOnePCComponentByItsId_ShouldNotReturnNull(int id) throws PCBuilderException{
         doAnswer(invocation -> {
             PCComponent theComponent = null;
             for(PCComponent component: components)
@@ -75,7 +75,8 @@ class AbstractManagerTest {
 
     @ParameterizedTest
     @CsvSource({"0", "5", "-1"})
-    public void getByIdTestThrows(int id) throws PCBuilderException{
+    @DisplayName("Get one PCComponent object by its ID (fail)")
+    public void testGetById_GetOnePCComponentByItsId_ShouldReturnNull(int id) throws PCBuilderException{
         doAnswer(invocation -> {
             PCComponent theComponent = null;
             for (PCComponent component : components)
@@ -88,17 +89,20 @@ class AbstractManagerTest {
 
     @ParameterizedTest
     @CsvSource({"1", "2"})
-    public void deleteByIdSuccess(int id) throws PCBuilderException{
+    @DisplayName("Delete one PCComponent object by its ID (success)")
+    public void testDeleteById_DeleteOnePCComponentByItsId_ShouldReturnComponentsSizeMinusOne(int id) throws PCBuilderException{
         doAnswer(invocation -> {
             components.removeIf(e -> e.getId() == (Integer) invocation.getArgument(0));
             return components;
         }).when(dao).deleteById(anyInt());
+        int oldComponentsSize = components.size();
         processorManagerMock.deleteById(id);
-        assertEquals(1, components.size());
+        assertEquals(oldComponentsSize - 1, components.size());
     }
     @ParameterizedTest
     @CsvSource({"0", "5", "-1"})
-    public void deleteByIdFail(int id) throws PCBuilderException{
+    @DisplayName("Delete one PCComponent object by its ID (fail)")
+    public void testDeleteById_DeleteOnePCComponentByItsId_ShouldReturnUntouchedComponents(int id) throws PCBuilderException{
         doAnswer(invocation -> {
             components.removeIf(e -> e.getId() == (Integer) invocation.getArgument(0));
             return components;
