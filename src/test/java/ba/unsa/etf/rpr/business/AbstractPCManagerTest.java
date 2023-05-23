@@ -8,10 +8,7 @@ import ba.unsa.etf.rpr.beans.decorator.pc.PCBean;
 import ba.unsa.etf.rpr.dal.pc.AbstractPCDao;
 import ba.unsa.etf.rpr.dal.pc.PCDaoImpl;
 import ba.unsa.etf.rpr.exceptions.PCBuilderException;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +43,8 @@ class AbstractPCManagerTest {
     }
 
     @Test
-    void removeAllTest() throws PCBuilderException {
+    @DisplayName("Remove all pcs from DB")
+    void testRemoveAll_RemoveAllPCs_ShouldReturnEmptyCollection() throws PCBuilderException {
         doAnswer(invocation -> {
             pcs.clear();
             return pcs;
