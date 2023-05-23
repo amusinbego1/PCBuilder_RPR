@@ -3,8 +3,11 @@ package ba.unsa.etf.rpr.beans;
 import ba.unsa.etf.rpr.beans.decorator.pc.PCBean;
 import ba.unsa.etf.rpr.exceptions.PCBuilderException;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import java.util.List;
 
@@ -23,27 +26,29 @@ class PCBeanTest {
                 new GraphCardBean("", "", "", "", "", 2)));
     }
     @Test
-    public void idableImplementationTest(){
+    @DisplayName("Idable interface is implemented (success)")
+    public void testIdableImplementation_ChecksCorrectIdableInterfaceImplementation_SetAndGetIdShouldBeEqual(){
         PCBean component = new PCBean();
         component.setId(66);
         assertEquals(66, component.getId());
     }
     @Test
-    void getPrice() {
+    @DisplayName("Correct price calculation of PCBean object (success)")
+    void testGetPrice_ChecksCorrectPriceCalculation_ShouldReturn10() {
         assertEquals(10, pc.getPrice());
     }
 
-    @Test
-    void getComponentSuccess() throws PCBuilderException {
-        assertEquals("ba.unsa.etf.rpr.beans.RamBean", pc.getComponent("ram").getClass().getName());
+    @ParameterizedTest
+    @CsvSource({"ram", "graphcard"})
+    @DisplayName("Getting component from component's type (success)")
+    void testGetComponent_ChecksForGettingRightComponent_ShouldReturnPCComponentObject(String type) throws PCBuilderException {
+        assertEquals("ba.unsa.etf.rpr.beans." + (type.equals("ram") ? "RamBean" : "GraphCardBean")
+                , pc.getComponent(type).getClass().getName());
     }
 
     @Test
-    void getComponentSuccess2() throws PCBuilderException {
-        assertEquals("ba.unsa.etf.rpr.beans.GraphCardBean", pc.getComponent("graphcard").getClass().getName());
-    }
-    @Test
-    void getComponentThrow(){
+    @DisplayName("Getting component from component's type (fail)")
+    void testGetComponent_ChecksForGettingRightComponent_ShouldThrowBecauseOfUnexistingType(){
         assertThrows(PCBuilderException.class, () -> {
             pc.getComponent("motherboard");
         });
