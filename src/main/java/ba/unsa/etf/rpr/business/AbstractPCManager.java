@@ -29,13 +29,13 @@ public abstract class AbstractPCManager extends AbstractManager<PC> {
     protected Dao<PC> getDao() {
         return DaoFactory.getPCDao();
     }
-//
-//    public void addPCs(List<PC> pcs) throws PCBuilderException {
-//        for(PC pc: pcs)
-//            add(pc);
-//    }
-//
-//    public void addPCs(PC... pcs) throws PCBuilderException {
-//        addPCs(List.of(pcs));
-//    }
+
+    public void addPCs(List<PC> pcs) throws PCBuilderException {
+        for(PC pc: pcs)
+            add(pc);
+    }
+
+    public void addPCs(PC... pcs) throws PCBuilderException {
+        addPCs(List.of(pcs));
+    }
 }
