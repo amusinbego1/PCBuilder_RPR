@@ -23,7 +23,7 @@ public abstract class AbstractPCManager extends AbstractManager<PC> {
         }
     }
 
-//    public abstract List<PC> makePCs(List<PCComponent>...componentCollections) throws PCBuilderException;
+    public abstract List<PC> makePCs(List<PCComponent>...componentCollections) throws PCBuilderException;
 
     @Override
     protected Dao<PC> getDao() {
