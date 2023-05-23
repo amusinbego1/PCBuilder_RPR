@@ -57,85 +57,85 @@ class AbstractPCManagerTest {
         pcManager.removeAll();
         assertEquals(0, pcManager.getAll().size());
     }
-//
-//    private static Object[] makePCsTestParametersSuccess() {
-//        return new Object[]{
-//                new Object[]{
-//                        new ArrayList<PCComponent>(List.of(
-//                                new ProcessorBean(), new ProcessorBean()
-//                        )),
-//                        new ArrayList<PCComponent>(List.of(
-//                                new RamBean(), new RamBean()
-//                        )),
-//                        new ArrayList<PCComponent>(List.of(
-//                                new GraphCardBean(), new GraphCardBean()
-//                        )),
-//                        8
-//                },
-//                new Object[]{
-//                        new ArrayList<PCComponent>(List.of(
-//                                new ProcessorBean(), new ProcessorBean()
-//                        )),
-//                        new ArrayList<PCComponent>(List.of(
-//                                new RamBean(), new RamBean()
-//                        )),
-//                        new ArrayList<PCComponent>(List.of(
-//                                new GraphCardBean()
-//                        )),
-//                        4
-//                },
-//                new Object[]{
-//                        new ArrayList<PCComponent>(List.of(
-//                                new ProcessorBean()
-//                        )),
-//                        new ArrayList<PCComponent>(List.of(
-//                                new RamBean(), new RamBean()
-//                        )),
-//                        new ArrayList<PCComponent>(List.of(
-//                                new GraphCardBean()
-//                        )),
-//                        2
-//                },
-//                new Object[]{
-//                        new ArrayList<PCComponent>(List.of(
-//                                new ProcessorBean(), new ProcessorBean()
-//                        )),
-//                        new ArrayList<PCComponent>(),
-//                        new ArrayList<PCComponent>(List.of(
-//                                new GraphCardBean(), new GraphCardBean()
-//                        )),
-//                        0
-//                },
-//                new Object[]{
-//                        new ArrayList<PCComponent>(),
-//                        new ArrayList<PCComponent>(List.of(
-//                                new RamBean(), new RamBean()
-//                        )),
-//                        new ArrayList<PCComponent>(List.of(
-//                                new GraphCardBean()
-//                        )),
-//                        0
-//                },
-//                new Object[]{
-//                        new ArrayList<PCComponent>(List.of(
-//                                new ProcessorBean()
-//                        )),
-//                        new ArrayList<PCComponent>(List.of(
-//                                new RamBean(), new RamBean()
-//                        )),
-//                        new ArrayList<PCComponent>(),
-//                        0
-//                }
-//        };
-//    }
-//
-//    @ParameterizedTest
-//    @MethodSource("makePCsTestParametersSuccess")
-//    @DisplayName("Make list of PCs from provided PCComponent objects (success)")
-//    void testMakePCs_MakePCsListFromProvidedPCComponents_ShouldReturnCorrectSizeOfPCsList(List<PCComponent> cp1, List<PCComponent> cp2, List<PCComponent> cp3, int expectedSize) throws PCBuilderException {
-//        assertEquals(expectedSize, pcManager.makePCs(cp1, cp2, cp3).size());
-//    }
-//
+
+    private static Object[] makePCsTestParametersSuccess() {
+        return new Object[]{
+                new Object[]{
+                        new ArrayList<PCComponent>(List.of(
+                                new ProcessorBean(), new ProcessorBean()
+                        )),
+                        new ArrayList<PCComponent>(List.of(
+                                new RamBean(), new RamBean()
+                        )),
+                        new ArrayList<PCComponent>(List.of(
+                                new GraphCardBean(), new GraphCardBean()
+                        )),
+                        8
+                },
+                new Object[]{
+                        new ArrayList<PCComponent>(List.of(
+                                new ProcessorBean(), new ProcessorBean()
+                        )),
+                        new ArrayList<PCComponent>(List.of(
+                                new RamBean(), new RamBean()
+                        )),
+                        new ArrayList<PCComponent>(List.of(
+                                new GraphCardBean()
+                        )),
+                        4
+                },
+                new Object[]{
+                        new ArrayList<PCComponent>(List.of(
+                                new ProcessorBean()
+                        )),
+                        new ArrayList<PCComponent>(List.of(
+                                new RamBean(), new RamBean()
+                        )),
+                        new ArrayList<PCComponent>(List.of(
+                                new GraphCardBean()
+                        )),
+                        2
+                },
+                new Object[]{
+                        new ArrayList<PCComponent>(List.of(
+                                new ProcessorBean(), new ProcessorBean()
+                        )),
+                        new ArrayList<PCComponent>(),
+                        new ArrayList<PCComponent>(List.of(
+                                new GraphCardBean(), new GraphCardBean()
+                        )),
+                        0
+                },
+                new Object[]{
+                        new ArrayList<PCComponent>(),
+                        new ArrayList<PCComponent>(List.of(
+                                new RamBean(), new RamBean()
+                        )),
+                        new ArrayList<PCComponent>(List.of(
+                                new GraphCardBean()
+                        )),
+                        0
+                },
+                new Object[]{
+                        new ArrayList<PCComponent>(List.of(
+                                new ProcessorBean()
+                        )),
+                        new ArrayList<PCComponent>(List.of(
+                                new RamBean(), new RamBean()
+                        )),
+                        new ArrayList<PCComponent>(),
+                        0
+                }
+        };
+    }
+
+    @ParameterizedTest
+    @MethodSource("makePCsTestParametersSuccess")
+    @DisplayName("Make list of PCs from provided PCComponent objects (success)")
+    void testMakePCs_MakePCsListFromProvidedPCComponents_ShouldReturnCorrectSizeOfPCsList(List<PCComponent> cp1, List<PCComponent> cp2, List<PCComponent> cp3, int expectedSize) throws PCBuilderException {
+        assertEquals(expectedSize, pcManager.makePCs(cp1, cp2, cp3).size());
+    }
+
     @Test
     @DisplayName("Add provided PCs as List to db")
     void testAddPCs_AddProvidedPCsAsListToDBMock_ShouldReturnCurrenSizePlusAddedPCs() throws PCBuilderException {
