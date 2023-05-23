@@ -1,13 +1,18 @@
 package ba.unsa.etf.rpr.business;
 import ba.unsa.etf.rpr.beans.PCComponent;
 import ba.unsa.etf.rpr.beans.ProcessorBean;
+import ba.unsa.etf.rpr.beans.decorator.pc.PC;
 import ba.unsa.etf.rpr.dal.AbstractPCComponentDao;
 import ba.unsa.etf.rpr.exceptions.PCBuilderException;
+import junitparams.JUnitParamsRunner;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.runner.RunWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @Order(3)
-@ExtendWith(MockitoExtension.class)
+@RunWith(JUnitParamsRunner.class)
 class AbstractManagerTest {
 
     private static final ProcessorManager processorManagerMock = spy(new ProcessorManager());
@@ -55,5 +60,30 @@ class AbstractManagerTest {
         assertEquals("PentaCore", processorManagerMock.update(newProcessor).getName());
     }
 
+    @ParameterizedTest
+    @CsvSource({"1", "2"})
+    public void getByIdTestSuccess(int id) throws PCBuilderException{
+        doAnswer(invocation -> {
+            PCComponent theComponent = null;
+            for(PCComponent component: components)
+                if(component.getId() == (Integer)invocation.getArgument(0))
+                    theComponent = component;
+            return theComponent;
+        }).when(dao).getById(anyInt());
+        assertNotNull(processorManagerMock.getById(id));
+    }
+
+    @ParameterizedTest
+    @CsvSource({"0", "5", "-1"})
+    public void getByIdTestThrows(int id) throws PCBuilderException{
+        doAnswer(invocation -> {
+            PCComponent theComponent = null;
+            for (PCComponent component : components)
+               if (component.getId() == (Integer) invocation.getArgument(0))
+                   theComponent = component;
+            return theComponent;
+        }).when(dao).getById(anyInt());
+        assertNull(processorManagerMock.getById(id));
+    }
 
 }
