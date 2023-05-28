@@ -1,5 +1,6 @@
 package ba.unsa.etf.rpr.business;
 
+import ba.unsa.etf.rpr.beans.GraphCardBean;
 import ba.unsa.etf.rpr.beans.PCComponent;
 import ba.unsa.etf.rpr.beans.RamBean;
 import ba.unsa.etf.rpr.dal.AbstractPCComponentDao;
@@ -37,7 +38,8 @@ class AbstractPCComponentManagerTest {
     public void setupEach() {
         components = new ArrayList<>(List.of(
                 new RamBean(1, "Trident Z5 NEO", "Intel", "no url", "no  url", "no desc", 100),
-                new RamBean(2, "Corsair Vengeance Dominator", "Corsair", "random url", "random url", "some good desc", 150)
+                new RamBean(2, "Corsair Vengeance Dominator", "Corsair", "random url", "random url", "some good desc", 150),
+                new GraphCardBean(3, "AMD Radeon Graphics", "AMD", "no url", "no url", "some decent desc", 400)
         ));
     }
 
@@ -72,9 +74,10 @@ class AbstractPCComponentManagerTest {
     }
 
     @ParameterizedTest
-    @CsvSource({"10., 2",
-                "110., 1",
-                "200., 0"})
+    @CsvSource({"10., 3",
+                "110., 2",
+                "200., 1",
+                "400., 0"})
     @DisplayName("Get PCComponents that have bigger price)")
     void testGetWithHigherPrice_GetPCComponentsThatAreMoreExpensive_ShouldReturnCorrectSizeOfReturnedComponents(double price, int expectedSize) throws PCBuilderException {
         doAnswer((invocation) -> {
