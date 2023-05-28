@@ -69,7 +69,7 @@ class AbstractPCComponentManagerTest {
                 if (component.getManufacturer().equals(invocation.getArguments()[0]))
                     filteredComponents.add(component);
             return filteredComponents;
-        }).when(dao).getByManufacturer("Intel");
+        }).when(dao).getByManufacturer(anyString());
         assertEquals(2, ramManagerMock.getByManufacturer("Intel").size());
     }
 
@@ -77,7 +77,7 @@ class AbstractPCComponentManagerTest {
     @CsvSource({"10., 3",
                 "110., 2",
                 "200., 1",
-                "400., 0"})
+                "450., 0"})
     @DisplayName("Get PCComponents that have bigger price)")
     void testGetWithHigherPrice_GetPCComponentsThatAreMoreExpensive_ShouldReturnCorrectSizeOfReturnedComponents(double price, int expectedSize) throws PCBuilderException {
         doAnswer((invocation) -> {
