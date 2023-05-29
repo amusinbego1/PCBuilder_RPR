@@ -16,6 +16,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -55,7 +56,7 @@ class AbstractPCManagerTest {
         doReturn(pcs).when(dao).getAll();
 
         pcManager.removeAll();
-        assertEquals(0, pcManager.getAll().size());
+        assertThat(pcManager.getAll()).isEmpty();
     }
 
     private static Object[] makePCsTestParametersSuccess() {
@@ -133,7 +134,7 @@ class AbstractPCManagerTest {
     @MethodSource("makePCsTestParametersSuccess")
     @DisplayName("Make list of PCs from provided PCComponent objects (success)")
     void testMakePCs_MakePCsListFromProvidedPCComponents_ShouldReturnCorrectSizeOfPCsList(List<PCComponent> cp1, List<PCComponent> cp2, List<PCComponent> cp3, int expectedSize) throws PCBuilderException {
-        assertEquals(expectedSize, pcManager.makePCs(cp1, cp2, cp3).size());
+        assertThat(pcManager.makePCs(cp1, cp2, cp3)).hasSize(expectedSize);
     }
 
     @Test
@@ -145,7 +146,7 @@ class AbstractPCManagerTest {
             return pcs;
         }).when(pcManager).addPCs(anyList());
         pcManager.addPCs(List.of(new PCBean(), new PCBean(), new PCBean()));
-        assertEquals(oldSize + 3, pcs.size());
+        assertThat(pcs).hasSize(oldSize + 3);
     }
 
     @Test
@@ -157,7 +158,7 @@ class AbstractPCManagerTest {
             return pcs;
         }).when(pcManager).addPCs(anyList());
         pcManager.addPCs(new PCBean(), new PCBean(), new PCBean());
-        assertEquals(oldSize + 3, pcs.size());
+        assertThat(pcs).hasSize(oldSize + 3);
     }
 
 

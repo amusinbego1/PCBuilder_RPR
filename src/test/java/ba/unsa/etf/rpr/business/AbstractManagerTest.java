@@ -12,7 +12,6 @@ import org.junit.runner.RunWith;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -26,7 +25,7 @@ class AbstractManagerTest {
     private List<PCComponent> components;
     @BeforeEach
     public void setupEach() {
-        components = new ArrayList(List.of(
+        components = new ArrayList<>(List.of(
                 new ProcessorBean(1,"ThreadRipper", "Intel", "no url", "no url", "Some bad desc", 66),
                 new ProcessorBean(2,"HexaCore", "Intel", "no url", "no url", "Some random desc...", 23)));
     }
@@ -56,7 +55,7 @@ class AbstractManagerTest {
                     components.set(i, theComponent);
             return theComponent;
         }).when(dao).update(any(PCComponent.class));
-        assertEquals("PentaCore", processorManagerMock.update(newProcessor).getName());
+        assertEquals(newProcessor, processorManagerMock.update(newProcessor));
     }
 
     @ParameterizedTest
@@ -107,7 +106,8 @@ class AbstractManagerTest {
             components.removeIf(e -> e.getId() == (Integer) invocation.getArgument(0));
             return components;
         }).when(dao).deleteById(anyInt());
+        int oldSize = components.size();
         processorManagerMock.deleteById(id);
-        assertEquals(2, components.size());
+        assertEquals(oldSize, components.size());
     }
 }

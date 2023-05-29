@@ -14,6 +14,7 @@ import org.junit.runner.RunWith;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -70,7 +71,9 @@ class AbstractPCComponentManagerTest {
                     filteredComponents.add(component);
             return filteredComponents;
         }).when(dao).getByManufacturer(anyString());
-        assertEquals(2, ramManagerMock.getByManufacturer("Intel").size());
+        assertThat(ramManagerMock.getByManufacturer("Intel"))
+                .hasSize(2)
+                        .extracting("manufacturer").containsOnly("Intel");
     }
 
     @ParameterizedTest
@@ -87,7 +90,7 @@ class AbstractPCComponentManagerTest {
                     filteredComponents.add(component);
             return filteredComponents;
         }).when(dao).getWithHigherPrice(anyDouble());
-        assertEquals(expectedSize, ramManagerMock.getWithHigherPrice(price).size());
+        assertThat(ramManagerMock.getWithHigherPrice(price)).hasSize(expectedSize);
     }
 
     @ParameterizedTest
@@ -103,7 +106,7 @@ class AbstractPCComponentManagerTest {
                     filteredComponents.add(component);
             return filteredComponents;
         }).when(dao).getWithLowerPrice(anyDouble());
-        assertEquals(expectedSize, ramManagerMock.getWithLowerPrice(price).size());
+        assertThat(ramManagerMock.getWithLowerPrice(price)).hasSize(expectedSize);
     }
 
     @ParameterizedTest
@@ -121,6 +124,6 @@ class AbstractPCComponentManagerTest {
                     filteredComponents.add(component);
             return filteredComponents;
         }).when(dao).getWithPriceBetween(anyDouble(), anyDouble());
-        assertEquals(expectedSize, ramManagerMock.getWithPriceBetween(low, high).size());
+        assertThat(ramManagerMock.getWithPriceBetween(low, high)).hasSize(expectedSize);
     }
 }
