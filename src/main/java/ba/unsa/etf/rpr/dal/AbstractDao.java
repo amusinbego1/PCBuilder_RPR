@@ -29,7 +29,7 @@ public abstract class AbstractDao<T extends Idable> implements Dao<T> {
                 this.connection = DriverManager.getConnection(url, username, password);
             }
             catch(SQLException e){
-                this.connection = DriverManager.getConnection("jdbc:mysql://localhost");
+                this.connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/pcbuilder?createDatabaseIfNotExist=true", username, password);
                 injectSQLDatabase();
             }
         } catch (IOException | PCBuilderException | SQLException e) {
@@ -46,6 +46,8 @@ public abstract class AbstractDao<T extends Idable> implements Dao<T> {
             }
         }
         catch(Exception e){
+            System.out.println(e.getMessage());
+            e.printStackTrace();
             throw new PCBuilderException("Database dump failed");
         }
     }

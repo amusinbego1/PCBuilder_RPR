@@ -1,10 +1,10 @@
-CREATE DATABASE  IF NOT EXISTS `sql7614977` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `sql7614977`;
+CREATE DATABASE  IF NOT EXISTS `pcbuilder` /*!40100 DEFAULT CHARACTER SET latin1 COLLATE latin1_bin */;
+USE `pcbuilder`;
 -- MySQL dump 10.13  Distrib 8.0.32, for Win64 (x86_64)
 --
--- Host: localhost    Database: sql7614977
+-- Host: sql7.freemysqlhosting.net    Database: pcbuilder
 -- ------------------------------------------------------
--- Server version	8.0.32
+-- Server version	5.5.62-0ubuntu0.14.04.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -25,17 +25,16 @@ DROP TABLE IF EXISTS `graphcards`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `graphcards` (
-  `graphcard_id` int NOT NULL AUTO_INCREMENT,
-  `graphcard_name` varchar(40) NOT NULL,
-  `manufacturer` varchar(40) NOT NULL,
-  `shop_url` text,
-  `img_url` text,
-  `graphcard_desc` text,
-  `price` decimal(7,2) NOT NULL,
-  PRIMARY KEY (`graphcard_id`),
-  CONSTRAINT `valid_graphcard_price` CHECK ((`price` >= 0)),
-  CONSTRAINT `unique_graphcard` UNIQUE(`graphcard_name`, `graphcard_desc`(255), manufacturer, `shop_url`(255))
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+                              `graphcard_id` int(11) NOT NULL AUTO_INCREMENT,
+                              `graphcard_name` varchar(40) COLLATE latin1_bin NOT NULL,
+                              `manufacturer` varchar(40) COLLATE latin1_bin NOT NULL,
+                              `shop_url` text COLLATE latin1_bin,
+                              `img_url` text COLLATE latin1_bin,
+                              `graphcard_desc` text COLLATE latin1_bin,
+                              `price` decimal(7,2) NOT NULL,
+                              PRIMARY KEY (`graphcard_id`),
+                              UNIQUE KEY `unique_graphcard` (`graphcard_name`,`graphcard_desc`(255),`manufacturer`,`shop_url`(255))
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1 COLLATE=latin1_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -56,19 +55,18 @@ DROP TABLE IF EXISTS `pcs`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `pcs` (
-  `pc_id` int NOT NULL AUTO_INCREMENT,
-  `ram_id` int NOT NULL,
-  `processor_id` int NOT NULL,
-  `graphcard_id` int NOT NULL,
-  PRIMARY KEY (`pc_id`),
-  KEY `ram_id` (`ram_id`),
-  KEY `processor_id` (`processor_id`),
-  KEY `graphcard_id` (`graphcard_id`),
-  CONSTRAINT `pcs_ibfk_1` FOREIGN KEY (`ram_id`) REFERENCES `rams` (`ram_id`) ON DELETE CASCADE,
-  CONSTRAINT `pcs_ibfk_2` FOREIGN KEY (`processor_id`) REFERENCES `processors` (`processor_id`) ON DELETE CASCADE,
-  CONSTRAINT `pcs_ibfk_3` FOREIGN KEY (`graphcard_id`) REFERENCES `graphcards` (`graphcard_id`) ON DELETE CASCADE,
-  CONSTRAINT `unique_pc` UNIQUE (`ram_id`, `processor_id`, `graphcard_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+                       `pc_id` int(11) NOT NULL AUTO_INCREMENT,
+                       `ram_id` int(11) NOT NULL,
+                       `processor_id` int(11) NOT NULL,
+                       `graphcard_id` int(11) NOT NULL,
+                       PRIMARY KEY (`pc_id`),
+                       UNIQUE KEY `unique_pc` (`ram_id`,`processor_id`,`graphcard_id`),
+                       KEY `processor_id` (`processor_id`),
+                       KEY `graphcard_id` (`graphcard_id`),
+                       CONSTRAINT `pcs_ibfk_1` FOREIGN KEY (`ram_id`) REFERENCES `rams` (`ram_id`) ON DELETE CASCADE,
+                       CONSTRAINT `pcs_ibfk_2` FOREIGN KEY (`processor_id`) REFERENCES `processors` (`processor_id`) ON DELETE CASCADE,
+                       CONSTRAINT `pcs_ibfk_3` FOREIGN KEY (`graphcard_id`) REFERENCES `graphcards` (`graphcard_id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -88,17 +86,16 @@ DROP TABLE IF EXISTS `processors`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `processors` (
-  `processor_id` int NOT NULL AUTO_INCREMENT,
-  `processor_name` varchar(40) NOT NULL,
-  `manufacturer` varchar(40) NOT NULL,
-  `shop_url` text,
-  `img_url` text,
-  `processor_desc` text,
-  `price` decimal(7,2) NOT NULL,
-  PRIMARY KEY (`processor_id`),
-  CONSTRAINT `valid_processor_price` CHECK ((`price` >= 0)),
-  CONSTRAINT `unique_processor` UNIQUE(`processor_name`, `processor_desc`(255), `manufacturer`, `shop_url`(255))
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+                              `processor_id` int(11) NOT NULL AUTO_INCREMENT,
+                              `processor_name` varchar(40) COLLATE latin1_bin NOT NULL,
+                              `manufacturer` varchar(40) COLLATE latin1_bin NOT NULL,
+                              `shop_url` text COLLATE latin1_bin,
+                              `img_url` text COLLATE latin1_bin,
+                              `processor_desc` text COLLATE latin1_bin,
+                              `price` decimal(7,2) NOT NULL,
+                              PRIMARY KEY (`processor_id`),
+                              UNIQUE KEY `unique_processor` (`processor_name`,`processor_desc`(255),`manufacturer`,`shop_url`(255))
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1 COLLATE=latin1_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -119,17 +116,16 @@ DROP TABLE IF EXISTS `rams`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `rams` (
-  `ram_id` int NOT NULL AUTO_INCREMENT,
-  `ram_name` varchar(40) NOT NULL,
-  `manufacturer` varchar(40) NOT NULL,
-  `shop_url` text,
-  `img_url` text,
-  `ram_desc` text,
-  `price` decimal(7,2) NOT NULL,
-  PRIMARY KEY (`ram_id`),
-  CONSTRAINT `valid_ram_price` CHECK ((`price` >= 0)),
-  CONSTRAINT `unique_ram` UNIQUE(`ram_name`, `ram_desc`(255), `manufacturer`, `shop_url`(255))
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+                        `ram_id` int(11) NOT NULL AUTO_INCREMENT,
+                        `ram_name` varchar(40) COLLATE latin1_bin NOT NULL,
+                        `manufacturer` varchar(40) COLLATE latin1_bin NOT NULL,
+                        `shop_url` text COLLATE latin1_bin,
+                        `img_url` text COLLATE latin1_bin,
+                        `ram_desc` text COLLATE latin1_bin,
+                        `price` decimal(7,2) NOT NULL,
+                        PRIMARY KEY (`ram_id`),
+                        UNIQUE KEY `unique_ram` (`ram_name`,`ram_desc`(255),`manufacturer`,`shop_url`(255))
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1 COLLATE=latin1_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -138,13 +134,9 @@ CREATE TABLE `rams` (
 
 LOCK TABLES `rams` WRITE;
 /*!40000 ALTER TABLE `rams` DISABLE KEYS */;
-INSERT INTO `rams` VALUES (1,'Corsair Vengeance LPX 16GB','Corsair','https://www.amazon.com/Corsair-Vengeance-PC4-25600-Desktop-Memory/dp/B07RS1G6XW/ref=sr_1_5?crid=21QZEARTYY4H4&keywords=RAM&qid=1682894207&sprefix=ram%2Caps%2C241&sr=8-5','https://m.media-amazon.com/images/I/51gLnYN1W7L._AC_SX679_PIbundle-2,TopRight,0,0_SH20_.jpg','Hand-sorted memory chips ensure high performance with generous overclocking headroom. VENGEANCE LPX is optimized for wide compatibility with the latest Intel and AMD DDR4 motherboards, A low-profile height of just 34mm ensures that VENGEANCE LPX even fits in most small-form-factor builds',65.00),(2,'Timetec 16GB DDR3 1600MHz','Timetec','https://www.amazon.com/Timetec-1600MHz-PC3L-12800-Unbuffered-Desktop/dp/B00IV19HZE/ref=sxin_15_ac_d_hl?ac_md=2-1-U21hbGwgQnVzaW5lc3MgQnJhbmQ%3D-ac_d_hl_hl_sb&content-id=amzn1.sym.ea5a3043-3172-4e81-bcc4-eb7524db4f7c%3Aamzn1.sym.ea5a3043-3172-4e81-bcc4-eb7524db4f7c&crid=21QZEARTYY4H4&cv_ct_cx=RAM&keywords=RAM&pd_rd_i=B00IV19HZE&pd_rd_r=af1d91dc-a72f-4b02-b7dd-35ec0f29c11a&pd_rd_w=ATPdR&pd_rd_wg=tQHfm&pf_rd_p=ea5a3043-3172-4e81-bcc4-eb7524db4f7c&pf_rd_r=5Y8P93F2W8XRHVJDV23V&qid=1682894392&sbo=RZvfv%2F%2FHxDF%2BO5021pAnSA%3D%3D&sprefix=ram%2Caps%2C241&sr=1-2-25fd44b4-555a-4528-b40c-891e95133f20&th=1','https://m.media-amazon.com/images/I/71gbuSPAJsL._AC_SX679_.jpg','DDR3L / DDR3 1600MHz PC3L-12800 / PC3-12800 240-Pin Unbuffered Non-ECC 1.35V / 1.5V CL11 Dual Rank 2Rx8 based 512x8. Module Size: 16GB KIT(2x8GB Modules) Package: 2x8GB ; JEDEC standard 1.35V, this is a dual voltage piece and can operate at 1.35V or 1.5V',24.00),(3,'Kingston FURY Beast RGB 64GB','Kingston','https://www.amazon.com/Kingston-FURY-3200MHz-KF432C16BBAK4-64/dp/B097HNG6Z7/ref=sr_1_1_sspa?crid=21QZEARTYY4H4&keywords=RAM&qid=1682894392&sprefix=ram%2Caps%2C241&sr=8-1-spons&spLa=ZW5jcnlwdGVkUXVhbGlmaWVyPUEzUkNaNTNHMTlZVkhKJmVuY3J5cHRlZElkPUEwNTQwMDM0MU1TSU5XMEc0MUlFSCZlbmNyeXB0ZWRBZElkPUEwMTA4NDM3M0c4Nk8yVTJaQjlUTSZ3aWRnZXROYW1lPXNwX2F0ZiZhY3Rpb249Y2xpY2tSZWRpcmVjdCZkb05vdExvZ0NsaWNrPXRydWU&th=1','https://m.media-amazon.com/images/I/714nmnxvuHL._AC_SX679_.jpg','3200MT/s DDR4 CL16 Desktop Memory Kit of 4 | Infrared Syncing | Intel XMP | AMD Ryzen | Plug n Play | KF432C16BBAK4/64',170.00);
+INSERT INTO `rams` VALUES (1,'Corsair Vengeance LPX 16GB','Corsair','https://www.amazon.com/Corsair-Vengeance-PC4-25600-Desktop-Memory/dp/B07RS1G6XW/ref=sr_1_5?crid=21QZEARTYY4H4&keywords=RAM&qid=1682894207&sprefix=ram%2Caps%2C241&sr=8-5','https://m.media-amazon.com/images/I/51gLnYN1W7L._AC_SX679_PIbundle-2,TopRight,0,0_SH20_.jpg','Hand-sorted memory chips ensure high performance with generous overclocking headroom. VENGEANCE LPX is optimized for wide compatibility with the latest Intel and AMD DDR4 motherboards, A low-profile height of just 34mm ensures that VENGEANCE LPX even fits in most small-form-factor builds',65.00),(2,'Timetec 16GB DDR3 1600MHz','Timetec','https://www.amazon.com/Timetec-1600MHz-PC3L-12800-Unbuffered-Desktop/dp/B00IV19HZE/ref=sxin_15_ac_d_hl?ac_md=2-1-U21hbGwgQnVzaW5lc3MgQnJhbmQ%3D-ac_d_hl_hl_sb&content-id=amzn1.sym.ea5a3043-3172-4e81-bcc4-eb7524db4f7c%3Aamzn1.sym.ea5a3043-3172-4e81-bcc4-eb7524db4f7c&crid=21QZEARTYY4H4&cv_ct_cx=RAM&keywords=RAM&pd_rd_i=B00IV19HZE&pd_rd_r=af1d91dc-a72f-4b02-b7dd-35ec0f29c11a&pd_rd_w=ATPdR&pd_rd_wg=tQHfm&pf_rd_p=ea5a3043-3172-4e81-bcc4-eb7524db4f7c&pf_rd_r=5Y8P93F2W8XRHVJDV23V&qid=1682894392&sbo=RZvfv%2F%2FHxDF%2BO5021pAnSA%3D%3D&sprefix=ram%2Caps%2C241&sr=1-2-25fd44b4-555a-4528-b40c-891e95133f20&th=1','https://m.media-amazon.com/images/I/71gbuSPAJsL._AC_SX679_.jpg' , 'DDR3 1600MHz PC3L-12800. Module Size: 16GB KIT(2x8GB Modules). For DDR3 Desktop Compatible with Intel and AMD CPU, Not for Laptop. Guaranteed Lifetime warranty from Purchase Date and Free technical support based on United States ',24.00),(3,'Kingston FURY Beast RGB 64GB','Kingston','https://www.amazon.com/Kingston-FURY-3200MHz-KF432C16BBAK4-64/dp/B097HNG6Z7/ref=sr_1_1_sspa?crid=21QZEARTYY4H4&keywords=RAM&qid=1682894392&sprefix=ram%2Caps%2C241&sr=8-1-spons&spLa=ZW5jcnlwdGVkUXVhbGlmaWVyPUEzUkNaNTNHMTlZVkhKJmVuY3J5cHRlZElkPUEwNTQwMDM0MU1TSU5XMEc0MUlFSCZlbmNyeXB0ZWRBZElkPUEwMTA4NDM3M0c4Nk8yVTJaQjlUTSZ3aWRnZXROYW1lPXNwX2F0ZiZhY3Rpb249Y2xpY2tSZWRpcmVjdCZkb05vdExvZ0NsaWNrPXRydWU&th=1pcs','https://m.media-amazon.com/images/I/714nmnxvuHL._AC_SX679_.jpg','3200MT/s DDR4 CL16 Desktop Memory Kit of 4 | Infrared Syncing | Intel XMP | AMD Ryzen | Plug n Play | KF432C16BBAK4/64',170.00);
 /*!40000 ALTER TABLE `rams` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Dumping routines for database 'sql7614977'
---
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -155,4 +147,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-05-01  1:08:36
+-- Dump completed on 2023-06-01 22:10:40
