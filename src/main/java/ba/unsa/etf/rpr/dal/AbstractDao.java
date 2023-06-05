@@ -5,10 +5,7 @@ import ba.unsa.etf.rpr.exceptions.PCBuilderException;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 
-import javax.swing.plaf.nimbus.State;
 import java.io.DataInputStream;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.*;
 import java.util.*;
@@ -29,7 +26,9 @@ public abstract class AbstractDao<T extends Idable> implements Dao<T> {
                 this.connection = DriverManager.getConnection(url, username, password);
             }
             catch(SQLException e){
-                this.connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/pcbuilder?createDatabaseIfNotExist=true", username, password);
+                String localUsername = properties.getProperty("localdb.username");
+                String localPassword = properties.getProperty("localdb.password");
+                this.connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/pcbuilder?createDatabaseIfNotExist=true", localUsername, localPassword);
                 injectSQLDatabase();
             }
         } catch (IOException | PCBuilderException | SQLException e) {
