@@ -12,13 +12,11 @@ import java.util.List;
 import java.util.Map;
 
 public class PCDaoImpl extends AbstractPCDao{
-    private static PCDao instance = null;
+    private static final PCDao instance = new PCDaoImpl("pcs");
     private PCDaoImpl(String tableName) {
         super(tableName);
     }
     public static PCDao getInstance(){
-        if(instance == null)
-            instance = new PCDaoImpl("pcs");
         return instance;
     }
 

@@ -8,13 +8,12 @@ import java.sql.ResultSet;
 
 public class RamDaoImpl extends AbstractPCComponentDao{
 
-    private static RamDaoImpl instance = null;
+    private static final RamDaoImpl instance =  new RamDaoImpl("rams");
 
     private RamDaoImpl(String tableName) {
         super(tableName);
     }
     public static RamDaoImpl getInstance(){
-        if(instance == null) instance = new RamDaoImpl("rams");
         return instance;
     }
 

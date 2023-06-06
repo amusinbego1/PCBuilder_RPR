@@ -8,13 +8,12 @@ import java.sql.ResultSet;
 
 public class GraphCardDaoImpl extends AbstractPCComponentDao{
 
-    private static GraphCardDaoImpl instance = null;
+    private static final GraphCardDaoImpl instance =  new GraphCardDaoImpl("graphcards");;
 
     private GraphCardDaoImpl(String tableName) {
         super(tableName);
     }
     public static GraphCardDaoImpl getInstance(){
-        if(instance == null) instance = new GraphCardDaoImpl("graphcards");
         return instance;
     }
 

@@ -8,13 +8,12 @@ import java.sql.ResultSet;
 
 public class ProcessorDaoImpl extends AbstractPCComponentDao{
 
-    private static ProcessorDaoImpl instance = null;
+    private static final ProcessorDaoImpl instance = new ProcessorDaoImpl("processors");
 
     private ProcessorDaoImpl(String tableName) {
         super(tableName);
     }
     public static ProcessorDaoImpl getInstance(){
-        if(instance == null) instance = new ProcessorDaoImpl("processors");
         return instance;
     }
 
