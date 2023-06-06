@@ -58,7 +58,7 @@ public abstract class AbstractDao<T extends Idable> implements Dao<T> {
 
     public abstract Map<String, Object> objectToRow(T object) throws PCBuilderException;
 
-    public List<T> executeQuery(String query, Object[] parameters) throws PCBuilderException {
+    public synchronized List<T> executeQuery(String query, Object[] parameters) throws PCBuilderException {
         List<T> resultList = new ArrayList<>();
         try {
             PreparedStatement preparedStatement = this.connection.prepareStatement(query);
@@ -74,6 +74,7 @@ public abstract class AbstractDao<T extends Idable> implements Dao<T> {
         } catch (SQLException e) {
             throw new PCBuilderException("Incorrect query");
         }
+        notifyAll();
         return resultList;
     }
 
@@ -151,7 +152,7 @@ public abstract class AbstractDao<T extends Idable> implements Dao<T> {
     }
 
 
-    private String getColumnNames() throws PCBuilderException {
+    private synchronized String getColumnNames() throws PCBuilderException {
         List<String> columnNamesList = new ArrayList<>();
         try {
             Statement statement = this.connection.createStatement();
@@ -161,6 +162,7 @@ public abstract class AbstractDao<T extends Idable> implements Dao<T> {
         } catch (SQLException e) {
             throw new PCBuilderException("Cannot get column names");
         }
+        notifyAll();
         return columnNamesList.toString().trim().substring(1, columnNamesList.toString().trim().length()-1);
     }
 
