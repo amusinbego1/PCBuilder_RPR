@@ -3,6 +3,7 @@ package ba.unsa.etf.rpr.dal.pc;
 import ba.unsa.etf.rpr.beans.decorator.pc.PC;
 import ba.unsa.etf.rpr.beans.decorator.pc.PCBean;
 import ba.unsa.etf.rpr.dal.DaoFactory;
+import ba.unsa.etf.rpr.dal.RamDaoImpl;
 import ba.unsa.etf.rpr.exceptions.PCBuilderException;
 
 import java.sql.ResultSet;
@@ -12,14 +13,16 @@ import java.util.List;
 import java.util.Map;
 
 public class PCDaoImpl extends AbstractPCDao{
-    private static final PCDao instance = new PCDaoImpl("pcs");
+
     private PCDaoImpl(String tableName) {
         super(tableName);
     }
-    public static PCDao getInstance(){
-        return instance;
+    private static final class InstanceHolder {
+        private static final PCDao instance = new PCDaoImpl("pcs");
     }
-
+    public static PCDao getInstance(){
+        return PCDaoImpl.InstanceHolder.instance;
+    }
     @Override
     public PC rowToObject(ResultSet resultSet) throws PCBuilderException {
         try {

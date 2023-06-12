@@ -6,23 +6,26 @@ import ba.unsa.etf.rpr.exceptions.PCBuilderException;
 
 import java.sql.ResultSet;
 
-public class GraphCardDaoImpl extends AbstractPCComponentDao{
-
-    private static final GraphCardDaoImpl instance =  new GraphCardDaoImpl("graphcards");;
+public class GraphCardDaoImpl extends AbstractPCComponentDao {
 
     private GraphCardDaoImpl(String tableName) {
         super(tableName);
     }
-    public static GraphCardDaoImpl getInstance(){
-        return instance;
+
+    private static final class InstanceHolder {
+        private static final GraphCardDaoImpl instance = new GraphCardDaoImpl("graphcards");
+    }
+
+    public static GraphCardDaoImpl getInstance() {
+        return InstanceHolder.instance;
     }
 
     @Override
     public PCComponent rowToObject(ResultSet resultSet) throws PCBuilderException {
-        try{
+        try {
             PCComponent graphcard = new GraphCardBean();
             return rowToGivenObject(graphcard, resultSet);
-        } catch(Exception e){
+        } catch (Exception e) {
             throw new PCBuilderException(e.getMessage(), e);
         }
     }

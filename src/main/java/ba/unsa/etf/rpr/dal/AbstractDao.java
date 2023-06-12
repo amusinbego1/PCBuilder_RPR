@@ -36,7 +36,7 @@ public abstract class AbstractDao<T extends Idable> implements Dao<T> {
         }
     }
 
-    private void injectSQLDatabase() throws PCBuilderException{
+    private synchronized void injectSQLDatabase() throws PCBuilderException{
         try(DataInputStream input = new DataInputStream(Objects.requireNonNull(ClassLoader.getSystemResourceAsStream("dbdump.sql")))){
             String DbSql = new String(input.readAllBytes());
             for(String sqlCommand: DbSql.split(";")){
@@ -49,6 +49,7 @@ public abstract class AbstractDao<T extends Idable> implements Dao<T> {
             e.printStackTrace();
             throw new PCBuilderException("Database dump failed");
         }
+        notifyAll();
     }
     protected String getTableName() {
         return tableName;
