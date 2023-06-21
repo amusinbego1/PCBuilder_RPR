@@ -18,7 +18,7 @@ public class AppFX extends Application {
         stage.setTitle("PC Builder");
         stage.setMinHeight(600);
         stage.setMinWidth(700);
-        stage.getIcons().add(new Image(Objects.requireNonNull(AppFX.class.getResource("/icons/builder.png")).openStream()));
+        stage.getIcons().add(new Image(Objects.requireNonNull(AppFX.class.getResource("/icons/repair.png")).openStream()));
         stage.setScene(scene);
         stage.show();
     }
