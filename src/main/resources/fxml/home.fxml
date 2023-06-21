@@ -49,10 +49,60 @@
         </HBox>
     </bottom>
     <right>
-        <VBox prefHeight="501.0" prefWidth="95.0" BorderPane.alignment="CENTER" />
+        <VBox prefHeight="632.0" prefWidth="99.0" BorderPane.alignment="TOP_CENTER">
+         <children>
+            <Button fx:id="pcButton" alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" textAlignment="CENTER" VBox.vgrow="ALWAYS">
+               <graphic>
+                  <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../icons/computer.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+            </Button>
+            <Button fx:id="processorButton" alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" textAlignment="CENTER" VBox.vgrow="ALWAYS">
+               <graphic>
+                  <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../icons/cpu-tower.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+            </Button>
+            <Button fx:id="graphcardButton" alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" textAlignment="CENTER" VBox.vgrow="ALWAYS">
+               <graphic>
+                  <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../icons/gpu.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+            </Button>
+            <Button fx:id="ramButton" alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" textAlignment="CENTER" VBox.vgrow="ALWAYS">
+               <graphic>
+                  <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../icons/ram.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+            </Button>
+         </children></VBox>
     </right>
     <center>
-        <VBox prefHeight="501.0" prefWidth="371.0" BorderPane.alignment="CENTER">
+        <VBox prefHeight="632.0" prefWidth="437.0" BorderPane.alignment="CENTER">
             <children>
                 <HBox alignment="CENTER" prefHeight="50.0" prefWidth="431.0" VBox.vgrow="NEVER">
                     <children>
