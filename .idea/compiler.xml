@@ -9,5 +9,10 @@
         <module name="PCBuilder_RPR" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="ba.unsa.etf.rpr.common" target="19" />
+      <module name="ba.unsa.etf.rpr.db" target="19" />
+      <module name="ba.unsa.etf.rpr.ui" target="19" />
+    </bytecodeTargetLevel>
   </component>
 </project>

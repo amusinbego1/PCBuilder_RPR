@@ -1,5 +1,8 @@
 package ba.unsa.etf.rpr;
 
+import java.io.IOException;
+import java.sql.SQLException;
+
 /**
  * Hello world!
  *
@@ -12,6 +15,10 @@ public class App
 {
     public static void main( String[] args )
     {
-        System.out.println( "Hello World!" );
+        try {
+            AppFX.main(args);
+        } catch (SQLException | IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
